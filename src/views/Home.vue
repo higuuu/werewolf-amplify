@@ -19,24 +19,26 @@ export default {
   components: {
     HelloWorld
   },
-  created: {
-    initializeLiff()
+  created() {
+    this.initializeLiff();
   },
   methods: {
     initializeLiff: function(myLiffId) {
-    liff
+      liff
         .init({
-            liffId: myLiffId
+          liffId: myLiffId
         })
         .then(() => {
-            // start to use LIFF's api
-            initializeApp();
+          // start to use LIFF's api
+          initializeApp();
         })
-        .catch((err) => {
-            document.getElementById("liffAppContent").classList.add('hidden');
-            document.getElementById("liffInitErrorMessage").classList.remove('hidden');
+        .catch(err => {
+          document.getElementById("liffAppContent").classList.add("hidden");
+          document
+            .getElementById("liffInitErrorMessage")
+            .classList.remove("hidden");
         });
-}
+    }
   }
 };
 </script>
