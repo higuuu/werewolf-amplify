@@ -10,8 +10,14 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(IconsPlugin)
 Vue.use(BootstrapVue)
-
 Vue.config.productionTip = false;
+
+import Amplify, * as AmplifyModules from "aws-amplify";
+// @ts-ignore
+import { AmplifyPlugin } from "aws-amplify-vue"
+import AwsExports from "./aws-exports"
+Vue.use(AmplifyPlugin, AmplifyModules)
+Amplify.configure(AwsExports)
 
 new Vue({
   router,

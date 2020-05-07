@@ -15,11 +15,11 @@ export default new Vuex.Store({
   },
   mutations: {
     setLoginData(state, info) {
-      state.loginData.userId = info.userId
-      state.loginData.type = info.type
-      state.loginData.utouId = info.utouId
-      state.loginData.roomId = info.roomId
-      state.loginData.groupId = info.groupId
+      state.loginData.userId = info.userId,
+        state.loginData.type = info.type,
+        state.loginData.utouId = info.utouId,
+        state.loginData.roomId = info.roomId,
+        state.loginData.groupId = info.groupId
     }
   },
   actions: {
@@ -29,7 +29,7 @@ export default new Vuex.Store({
   },
   getters: {
     getLoginData(state) {
-      return state.loginData
+      return state.loginData;
     }
   },
   modules: {}
