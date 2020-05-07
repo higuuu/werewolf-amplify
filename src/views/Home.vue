@@ -23,21 +23,16 @@ export default {
     this.initializeLiff();
   },
   methods: {
-    initializeLiff: function(myLiffId) {
-      liff
-        .init({
-          liffId: myLiffId
-        })
-        .then(() => {
-          // start to use LIFF's api
-          initializeApp();
-        })
-        .catch(err => {
-          document.getElementById("liffAppContent").classList.add("hidden");
-          document
-            .getElementById("liffInitErrorMessage")
-            .classList.remove("hidden");
-        });
+    initializeLiff: function() {
+      liff.init(
+        {
+          liffId: "1654168221-5V2krjnb"
+        },
+        () => {
+          const idToken = liff.getContext();
+          this.$store.dispatch("setLoginData", idToken);
+        }
+      );
     }
   }
 };

@@ -7,7 +7,7 @@
         <b-col cols="8" offset="2">
           <b-button-group>
             <b-button variant="success" v-on:click="participate()">
-              <b-icon icon="clipboard" aria-hidden="true" />ルームに参加する
+              <b-icon icon="clipboard" aria-hidden="true" />ゲームに参加する
             </b-button>
           </b-button-group>
         </b-col>
@@ -16,7 +16,7 @@
         <b-col cols="8" offset="2">
           <b-button-group>
             <b-button variant="success" v-on:click="organize()">
-              <b-icon icon="clipboard" aria-hidden="true" />ルームを作成する
+              <b-icon icon="clipboard" aria-hidden="true" />ゲームを開催する
             </b-button>
           </b-button-group>
         </b-col>
