@@ -38,3 +38,45 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const createGameInfo = /* GraphQL */ `
+  mutation CreateGameInfo(
+    $input: CreateGameInfoInput!
+    $condition: ModelGameInfoConditionInput
+  ) {
+    createGameInfo(input: $input, condition: $condition) {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
+export const updateGameInfo = /* GraphQL */ `
+  mutation UpdateGameInfo(
+    $input: UpdateGameInfoInput!
+    $condition: ModelGameInfoConditionInput
+  ) {
+    updateGameInfo(input: $input, condition: $condition) {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
+export const deleteGameInfo = /* GraphQL */ `
+  mutation DeleteGameInfo(
+    $input: DeleteGameInfoInput!
+    $condition: ModelGameInfoConditionInput
+  ) {
+    deleteGameInfo(input: $input, condition: $condition) {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;

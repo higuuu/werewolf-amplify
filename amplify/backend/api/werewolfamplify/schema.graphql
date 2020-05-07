@@ -3,3 +3,11 @@ type Todo @model {
   name: String!
   description: String
 }
+
+type GameInfo @model {
+  roomid: String!
+  type: String!
+  owner: String!
+  werewolf: Int!
+  people: Int!
+}

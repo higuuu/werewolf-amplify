@@ -29,3 +29,36 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGameInfo = /* GraphQL */ `
+  subscription OnCreateGameInfo {
+    onCreateGameInfo {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
+export const onUpdateGameInfo = /* GraphQL */ `
+  subscription OnUpdateGameInfo {
+    onUpdateGameInfo {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
+export const onDeleteGameInfo = /* GraphQL */ `
+  subscription OnDeleteGameInfo {
+    onDeleteGameInfo {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;

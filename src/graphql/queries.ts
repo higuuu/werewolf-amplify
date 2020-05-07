@@ -27,3 +27,32 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const getGameInfo = /* GraphQL */ `
+  query GetGameInfo($id: ID!) {
+    getGameInfo(id: $id) {
+      roomid
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
+export const listGameInfos = /* GraphQL */ `
+  query ListGameInfos(
+    $filter: ModelGameInfoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGameInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        roomid
+        type
+        owner
+        werewolf
+        people
+      }
+      nextToken
+    }
+  }
+`;

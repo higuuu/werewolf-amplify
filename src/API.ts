@@ -66,6 +66,49 @@ export type DeleteTodoInput = {
   id?: string | null,
 };
 
+export type CreateGameInfoInput = {
+  roomid: string,
+  type: string,
+  owner: string,
+  werewolf: number,
+  people: number,
+};
+
+export type ModelGameInfoConditionInput = {
+  roomid?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  werewolf?: ModelIntInput | null,
+  people?: ModelIntInput | null,
+  and?: Array< ModelGameInfoConditionInput | null > | null,
+  or?: Array< ModelGameInfoConditionInput | null > | null,
+  not?: ModelGameInfoConditionInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateGameInfoInput = {
+  roomid?: string | null,
+  type?: string | null,
+  owner?: string | null,
+  werewolf?: number | null,
+  people?: number | null,
+};
+
+export type DeleteGameInfoInput = {
+  id?: string | null,
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -89,6 +132,17 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type ModelGameInfoFilterInput = {
+  roomid?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  werewolf?: ModelIntInput | null,
+  people?: ModelIntInput | null,
+  and?: Array< ModelGameInfoFilterInput | null > | null,
+  or?: Array< ModelGameInfoFilterInput | null > | null,
+  not?: ModelGameInfoFilterInput | null,
 };
 
 export type CreateTodoMutationVariables = {
@@ -133,6 +187,54 @@ export type DeleteTodoMutation = {
   } | null,
 };
 
+export type CreateGameInfoMutationVariables = {
+  input: CreateGameInfoInput,
+  condition?: ModelGameInfoConditionInput | null,
+};
+
+export type CreateGameInfoMutation = {
+  createGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
+export type UpdateGameInfoMutationVariables = {
+  input: UpdateGameInfoInput,
+  condition?: ModelGameInfoConditionInput | null,
+};
+
+export type UpdateGameInfoMutation = {
+  updateGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
+export type DeleteGameInfoMutationVariables = {
+  input: DeleteGameInfoInput,
+  condition?: ModelGameInfoConditionInput | null,
+};
+
+export type DeleteGameInfoMutation = {
+  deleteGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
 export type GetTodoQueryVariables = {
   id: string,
 };
@@ -165,6 +267,42 @@ export type ListTodosQuery = {
   } | null,
 };
 
+export type GetGameInfoQueryVariables = {
+  id: string,
+};
+
+export type GetGameInfoQuery = {
+  getGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
+export type ListGameInfosQueryVariables = {
+  filter?: ModelGameInfoFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGameInfosQuery = {
+  listGameInfos:  {
+    __typename: "ModelGameInfoConnection",
+    items:  Array< {
+      __typename: "GameInfo",
+      roomid: string,
+      type: string,
+      owner: string,
+      werewolf: number,
+      people: number,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type OnCreateTodoSubscription = {
   onCreateTodo:  {
     __typename: "Todo",
@@ -189,5 +327,38 @@ export type OnDeleteTodoSubscription = {
     id: string,
     name: string,
     description: string | null,
+  } | null,
+};
+
+export type OnCreateGameInfoSubscription = {
+  onCreateGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
+export type OnUpdateGameInfoSubscription = {
+  onUpdateGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
+  } | null,
+};
+
+export type OnDeleteGameInfoSubscription = {
+  onDeleteGameInfo:  {
+    __typename: "GameInfo",
+    roomid: string,
+    type: string,
+    owner: string,
+    werewolf: number,
+    people: number,
   } | null,
 };
