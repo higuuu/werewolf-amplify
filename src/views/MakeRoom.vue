@@ -33,7 +33,19 @@
 </template>
 
 <script>
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
+
+const getGameInfoQuery = /* GraphQL */ `
+  query GetGameInfo($id: ID!) {
+    getGameInfo(id: $id) {
+      id
+      type
+      owner
+      werewolf
+      people
+    }
+  }
+`;
 
 const CreateGameInfoMutation = `mutation CreateGameInfo(
     $id: ID!,
@@ -73,6 +85,7 @@ export default {
   created() {
     this.participate();
     this.checkRoomid();
+    this.getGameInfo();
   },
   computed: {
     createGameInfoMutation() {
@@ -88,6 +101,12 @@ export default {
   // "Validation error of type FieldUndefined: Field 'CreateGameInfo' in type 'Mutation' is undefined @ 'CreateGameInfo'"
   //"Validation error of type VariableTypeMismatch: Variable type 'String!' doesn't match expected type 'ID' @ 'createGameInfo'"
   methods: {
+    getGameInfo: async function() {
+      const room = await API.graphql(
+        graphqlOperation(getGameInfoQuery, { id: this.roomid })
+      );
+      console.log(room);
+    },
     // 今度type をみてそれでroomId を決定する
     checkRoomid: function() {
       this.roomid = this.$store.state.loginData.groupId;
