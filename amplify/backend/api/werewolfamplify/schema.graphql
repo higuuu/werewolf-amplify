@@ -1,0 +1,13 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type GameInfo @model {
+  id: ID!
+  type: String!
+  owner: String!
+  werewolf: Int!
+  people: Int!
+}
