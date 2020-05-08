@@ -44,7 +44,7 @@ export const createGameInfo = /* GraphQL */ `
     $condition: ModelGameInfoConditionInput
   ) {
     createGameInfo(input: $input, condition: $condition) {
-      roomid
+      id
       type
       owner
       werewolf
@@ -58,7 +58,7 @@ export const updateGameInfo = /* GraphQL */ `
     $condition: ModelGameInfoConditionInput
   ) {
     updateGameInfo(input: $input, condition: $condition) {
-      roomid
+      id
       type
       owner
       werewolf
@@ -72,7 +72,7 @@ export const deleteGameInfo = /* GraphQL */ `
     $condition: ModelGameInfoConditionInput
   ) {
     deleteGameInfo(input: $input, condition: $condition) {
-      roomid
+      id
       type
       owner
       werewolf

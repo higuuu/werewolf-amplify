@@ -22,11 +22,11 @@
         </b-col>
       </b-row>
     </b-container>
-    <amplify-connect :mutation="createGameInfoMutation">
+    <amplify-connect :mutation="createGameInfoMutation" @done="onCreatedFinished">
       <template slot-scope="{ loading, mutate }">
         <div v-if="loading">Loading...</div>
         <!-- <div v-else-if="errors.length > 0">error</div> -->
-        <b-button variant="outline-primary" @click="mutate"></b-button>
+        <b-button variant="outline-primary" @click="mutate" class="mt-2">create</b-button>
       </template>
     </amplify-connect>
   </div>
@@ -36,20 +36,20 @@
 import { API } from "aws-amplify";
 
 const CreateGameInfoMutation = `mutation CreateGameInfo(
-    $roomid: String!
-    $type: String!
-    $owner: String!
-    $werewolf: Int!
+    $id: ID!,
+    $type: String!,
+    $owner: String!,
+    $werewolf: Int!,
     $people: Int!
     ){
-    CreateGameInfo(input: {     
-        roomid: $roomid
-        type:$type
-        owner:$owner
-        werewolf:$werewolf
+    createGameInfo(input: {     
+        id: $id,
+        type:$type,
+        owner:$owner,
+        werewolf:$werewolf,
         people:$people
   }){
-    roomid
+    id
     type
     owner
     werewolf
@@ -77,7 +77,7 @@ export default {
   computed: {
     createGameInfoMutation() {
       return this.$Amplify.graphqlOperation(CreateGameInfoMutation, {
-        roomid: this.roomid,
+        id: this.roomid,
         type: this.type,
         owner: this.owner,
         werewolf: this.werewolf,
@@ -85,6 +85,8 @@ export default {
       });
     }
   },
+  // "Validation error of type FieldUndefined: Field 'CreateGameInfo' in type 'Mutation' is undefined @ 'CreateGameInfo'"
+  //"Validation error of type VariableTypeMismatch: Variable type 'String!' doesn't match expected type 'ID' @ 'createGameInfo'"
   methods: {
     // 今度type をみてそれでroomId を決定する
     checkRoomid: function() {
@@ -96,8 +98,17 @@ export default {
     },
     organize: function() {
       console.log("organize");
-      this.createGameInfoMutation();
+    },
+    onCreatedFinished: function() {
+      console.log("Finish Create");
     }
   }
 };
 </script>
+
+<style>
+.icon_wolf {
+  height: 100px;
+  width: 100px;
+}
+</style>

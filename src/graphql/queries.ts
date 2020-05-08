@@ -30,7 +30,7 @@ export const listTodos = /* GraphQL */ `
 export const getGameInfo = /* GraphQL */ `
   query GetGameInfo($id: ID!) {
     getGameInfo(id: $id) {
-      roomid
+      id
       type
       owner
       werewolf
@@ -46,7 +46,7 @@ export const listGameInfos = /* GraphQL */ `
   ) {
     listGameInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        roomid
+        id
         type
         owner
         werewolf

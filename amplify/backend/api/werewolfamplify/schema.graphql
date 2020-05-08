@@ -5,7 +5,7 @@ type Todo @model {
 }
 
 type GameInfo @model {
-  roomid: String!
+  id: ID!
   type: String!
   owner: String!
   werewolf: Int!

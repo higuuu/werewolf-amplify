@@ -32,7 +32,7 @@ export const onDeleteTodo = /* GraphQL */ `
 export const onCreateGameInfo = /* GraphQL */ `
   subscription OnCreateGameInfo {
     onCreateGameInfo {
-      roomid
+      id
       type
       owner
       werewolf
@@ -43,7 +43,7 @@ export const onCreateGameInfo = /* GraphQL */ `
 export const onUpdateGameInfo = /* GraphQL */ `
   subscription OnUpdateGameInfo {
     onUpdateGameInfo {
-      roomid
+      id
       type
       owner
       werewolf
@@ -54,7 +54,7 @@ export const onUpdateGameInfo = /* GraphQL */ `
 export const onDeleteGameInfo = /* GraphQL */ `
   subscription OnDeleteGameInfo {
     onDeleteGameInfo {
-      roomid
+      id
       type
       owner
       werewolf

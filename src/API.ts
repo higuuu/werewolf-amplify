@@ -67,7 +67,7 @@ export type DeleteTodoInput = {
 };
 
 export type CreateGameInfoInput = {
-  roomid: string,
+  id?: string | null,
   type: string,
   owner: string,
   werewolf: number,
@@ -75,7 +75,6 @@ export type CreateGameInfoInput = {
 };
 
 export type ModelGameInfoConditionInput = {
-  roomid?: ModelStringInput | null,
   type?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   werewolf?: ModelIntInput | null,
@@ -98,7 +97,7 @@ export type ModelIntInput = {
 };
 
 export type UpdateGameInfoInput = {
-  roomid?: string | null,
+  id: string,
   type?: string | null,
   owner?: string | null,
   werewolf?: number | null,
@@ -135,7 +134,7 @@ export type ModelIDInput = {
 };
 
 export type ModelGameInfoFilterInput = {
-  roomid?: ModelStringInput | null,
+  id?: ModelIDInput | null,
   type?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   werewolf?: ModelIntInput | null,
@@ -195,7 +194,7 @@ export type CreateGameInfoMutationVariables = {
 export type CreateGameInfoMutation = {
   createGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -211,7 +210,7 @@ export type UpdateGameInfoMutationVariables = {
 export type UpdateGameInfoMutation = {
   updateGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -227,7 +226,7 @@ export type DeleteGameInfoMutationVariables = {
 export type DeleteGameInfoMutation = {
   deleteGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -274,7 +273,7 @@ export type GetGameInfoQueryVariables = {
 export type GetGameInfoQuery = {
   getGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -293,7 +292,7 @@ export type ListGameInfosQuery = {
     __typename: "ModelGameInfoConnection",
     items:  Array< {
       __typename: "GameInfo",
-      roomid: string,
+      id: string,
       type: string,
       owner: string,
       werewolf: number,
@@ -333,7 +332,7 @@ export type OnDeleteTodoSubscription = {
 export type OnCreateGameInfoSubscription = {
   onCreateGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -344,7 +343,7 @@ export type OnCreateGameInfoSubscription = {
 export type OnUpdateGameInfoSubscription = {
   onUpdateGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
@@ -355,7 +354,7 @@ export type OnUpdateGameInfoSubscription = {
 export type OnDeleteGameInfoSubscription = {
   onDeleteGameInfo:  {
     __typename: "GameInfo",
-    roomid: string,
+    id: string,
     type: string,
     owner: string,
     werewolf: number,
