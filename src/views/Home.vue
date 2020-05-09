@@ -209,7 +209,6 @@ export default {
   },
   created() {
     this.initializeLiff();
-    this.checkRoomid();
     this.participate();
   },
   computed: {
@@ -245,12 +244,13 @@ export default {
         {
           liffId: process.env.VUE_APP_LIFF_ID
         },
-        () => {
-          const idToken = liff.getContext();
-          this.$store.dispatch("setLoginData", idToken);
+        async function() {
+          const idToken = await liff.getContext();
+          await this.$store.dispatch("setLoginData", idToken);
           this.type = idToken.type || "test";
           this.roomid = getRoom(idToken.type, idToken.groupId, idToken.roomId);
           console.log(this.loginData);
+          await this.checkRoomid();
         }
       );
     },
@@ -273,6 +273,7 @@ export default {
         this.roomid = this.$store.state.loginData.groupId; //試験的に
       }
       console.log("type", this.type);
+      return;
     },
     participate: function() {
       console.log("participate");

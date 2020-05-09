@@ -9,9 +9,9 @@ export default new Vuex.Store({
       userId: "test",
       type: "test",
       owner: "",
-      utouId: "test",
-      roomId: "test",
-      groupId: "test"
+      utouId: "",
+      roomId: "",
+      groupId: ""
     }
   },
   mutations: {
@@ -22,6 +22,7 @@ export default new Vuex.Store({
         state.loginData.utouId = info.utouId,
         state.loginData.roomId = info.roomId,
         state.loginData.groupId = info.groupId
+      return
     }
   },
   actions: {
