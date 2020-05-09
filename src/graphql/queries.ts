@@ -33,6 +33,7 @@ export const getGameInfo = /* GraphQL */ `
       id
       type
       owner
+      owner_id
       werewolf
       villager
       diviner
@@ -52,6 +53,7 @@ export const listGameInfos = /* GraphQL */ `
         id
         type
         owner
+        owner_id
         werewolf
         villager
         diviner
