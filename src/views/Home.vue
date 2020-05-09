@@ -119,7 +119,7 @@ export default {
   computed: {
     getGameInfo() {
       return this.$Amplify.graphqlOperation(getGameInfoQuery, {
-        id: this.loginData.roomid
+        id: this.roomid
       });
     },
     createGameInfoSubscription() {
@@ -145,7 +145,8 @@ export default {
         () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
-          this.loginData = idToken;
+          this.roomid = idToken.groupId || "test";
+          this.type = idToken.type || "test";
           console.log(this.loginData);
         }
       );
