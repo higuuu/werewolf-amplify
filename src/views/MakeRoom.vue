@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       paticipatant: false,
-      roomid: "test",
+      roomId: "test",
       type: "test",
       owner: "test",
       werewolf: 2,
@@ -90,7 +90,7 @@ export default {
   computed: {
     createGameInfoMutation() {
       return this.$Amplify.graphqlOperation(CreateGameInfoMutation, {
-        id: this.roomid,
+        id: this.roomId,
         type: this.type,
         owner: this.owner,
         werewolf: this.werewolf,
@@ -103,13 +103,13 @@ export default {
   methods: {
     getGameInfo: async function() {
       const room = await API.graphql(
-        graphqlOperation(getGameInfoQuery, { id: this.roomid })
+        graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );
       console.log(room);
     },
     // 今度type をみてそれでroomId を決定する
     checkRoomid: function() {
-      this.roomid = this.$store.state.loginData.groupId;
+      this.roomId = this.$store.state.loginData.groupId;
     },
     participate: function() {
       console.log("participate");

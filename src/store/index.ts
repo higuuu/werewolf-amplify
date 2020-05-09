@@ -6,8 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loginData: {
-      userId: "test",
-      type: "test",
+      userId: "",
+      type: "",
       owner: "",
       utouId: "",
       roomId: "",
@@ -22,7 +22,6 @@ export default new Vuex.Store({
         state.loginData.utouId = info.utouId,
         state.loginData.roomId = info.roomId,
         state.loginData.groupId = info.groupId
-      return
     }
   },
   actions: {

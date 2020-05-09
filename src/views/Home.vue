@@ -189,8 +189,8 @@ export default {
         { value: 8, text: "9" }
       ],
       paticipatant: false,
-      roomid: "test",
-      type: "test",
+      roomId: "",
+      type: "",
       owner: "",
       werewolf: 2,
       villager: 2,
@@ -210,6 +210,7 @@ export default {
   created() {
     this.initializeLiff();
     this.participate();
+    this.checkRoomid();
   },
   computed: {
     sumPeople() {
@@ -218,7 +219,7 @@ export default {
     },
     getGameInfo() {
       return this.$Amplify.graphqlOperation(getGameInfoQuery, {
-        id: this.roomid
+        id: this.roomId
       });
     },
     createGameInfoSubscription() {
@@ -226,7 +227,7 @@ export default {
     },
     createGameInfoMutation() {
       return this.$Amplify.graphqlOperation(CreateGameInfoMutation, {
-        id: this.roomid,
+        id: this.roomId,
         type: this.type,
         owner: this.owner,
         werewolf: this.werewolf,
@@ -244,47 +245,44 @@ export default {
         {
           liffId: process.env.VUE_APP_LIFF_ID
         },
-        async function() {
-          const idToken = await liff.getContext();
-          await this.$store.dispatch("setLoginData", idToken);
-          this.type = idToken.type || "test";
-          this.roomid = getRoom(idToken.type, idToken.groupId, idToken.roomId);
-          console.log(this.loginData);
-          await this.checkRoomid();
+        () => {
+          const idToken = liff.getContext();
+          this.$store.dispatch("setLoginData", idToken);
         }
       );
     },
-    getRoom: function(type, groupId, roomId) {
-      if (type == "group") {
-        return groupId;
-      } else if (type == "room") {
-        return roomId;
-      } else {
-        return "test";
-      }
-    },
+    // getRoom: function(type, groupId, roomId) {
+    //   if (type == "group") {
+    //     return groupId;
+    //   } else if (type == "room") {
+    //     return roomId;
+    //   } else {
+    //     return "test";
+    //   }
+    // },
     // 今度type をみてそれでroomId を決定する
     checkRoomid: function() {
-      if (this.type == "group") {
-        this.roomid = this.$store.state.loginData.groupId;
-      } else if (this.type == "room") {
-        this.roomid = this.$store.state.loginData.roomId;
-      } else {
-        this.roomid = this.$store.state.loginData.groupId; //試験的に
+      this.type = this.$store.state.loginData.type || "test";
+      if (this.type === "group") {
+        this.roomId = this.$store.state.loginData.groupId;
+      } else if (this.type === "room") {
+        this.roomId = this.$store.state.loginData.roomId;
+      } else if (this.type === "test") {
+        this.roomId = "test"; //試験的に
       }
       console.log("type", this.type);
-      return;
+      console.log(this.roomId);
     },
     participate: function() {
       console.log("participate");
       this.paticipatant = true;
     },
     runGame: function() {
-      console.log(this.roomid);
-      if (this.roomid === "test") {
+      console.log(this.roomId);
+      if (this.roomId === "test") {
         return true;
       } else {
-        return false;
+        return true;
       }
     },
     goWaiting() {
