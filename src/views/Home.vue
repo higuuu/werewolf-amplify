@@ -107,7 +107,7 @@ export default {
     initializeLiff: function() {
       liff.init(
         {
-          liffId: "1654168221-5V2krjnb"
+          liffId: process.env.development
         },
         () => {
           const idToken = liff.getContext();
