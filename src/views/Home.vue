@@ -196,21 +196,12 @@ export default {
       villager: 2,
       diviner: 1,
       brave: 1,
-      people: 6,
-      loginData: {
-        userId: "",
-        type: "",
-        owner: "",
-        utouId: "",
-        roomId: "test",
-        groupId: ""
-      }
+      people: 6
     };
   },
   created() {
     this.initializeLiff();
     this.participate();
-    this.checkRoomid();
   },
   computed: {
     sumPeople() {
@@ -248,6 +239,7 @@ export default {
         () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
+          this.checkRoomid();
         }
       );
     },
@@ -261,17 +253,22 @@ export default {
     //   }
     // },
     // 今度type をみてそれでroomId を決定する
-    checkRoomid: function() {
-      this.type = this.$store.state.loginData.type || "test";
+    checkRoomid: async function() {
+      if (this.$store.state.loginData === null) {
+        this.roomId = "test"; //試験的に
+        this.type = "test";
+        console.log("type", this.type);
+        console.log(this.roomId);
+        return;
+      } else {
+        this.type = this.$store.state.loginData.type;
+        this.owner = this.$store.state.loginData.owner;
+      }
       if (this.type === "group") {
         this.roomId = this.$store.state.loginData.groupId;
       } else if (this.type === "room") {
         this.roomId = this.$store.state.loginData.roomId;
-      } else if (this.type === "test") {
-        this.roomId = "test"; //試験的に
       }
-      console.log("type", this.type);
-      console.log(this.roomId);
     },
     participate: function() {
       console.log("participate");

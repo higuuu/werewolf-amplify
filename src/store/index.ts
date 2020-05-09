@@ -16,12 +16,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setLoginData(state, info) {
-      state.loginData.userId = info.userId,
-        state.loginData.type = info.type,
-        state.loginData.owner = info.owner,
-        state.loginData.utouId = info.utouId,
-        state.loginData.roomId = info.roomId,
-        state.loginData.groupId = info.groupId
+      state.loginData = info
     }
   },
   actions: {
