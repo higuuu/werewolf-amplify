@@ -248,22 +248,12 @@ export default {
           this.$store.dispatch("setLoginData", idToken);
           this.checkRoomid();
           const checker = this.getGameInfoOnce();
-          if (checker !== null) {
+          if (checker === null) {
             this.$router.push("/waitingroom");
           }
         }
       );
     },
-    // getRoom: function(type, groupId, roomId) {
-    //   if (type == "group") {
-    //     return groupId;
-    //   } else if (type == "room") {
-    //     return roomId;
-    //   } else {
-    //     return "test";
-    //   }
-    // },
-    // 今度type をみてそれでroomId を決定する
     checkRoomid: async function() {
       if (this.$store.state.loginData === null) {
         this.roomId = "test"; //試験的に
@@ -291,11 +281,9 @@ export default {
       const room = await API.graphql(
         graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );
-      console.log(room);
-      return room || null;
+      return room.data.getGameInfo.id || null;
     },
     runGame: function() {
-      console.log(this.roomId);
       if (this.roomId === "test") {
         return true;
       } else {
