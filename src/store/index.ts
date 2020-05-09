@@ -6,20 +6,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loginData: {
-      userId: "test01",
-      type: "group",
-      utouId: "",
-      roomId: "",
+      userId: "test",
+      type: "test",
+      utouId: "test",
+      roomId: "test",
       groupId: "test"
     }
   },
   mutations: {
     setLoginData(state, info) {
-      state.loginData.userId = info.userId,
-        state.loginData.type = info.type,
-        state.loginData.utouId = info.utouId,
-        state.loginData.roomId = info.roomId,
-        state.loginData.groupId = info.groupId
+      state.loginData.userId = info.userId || "test",
+        state.loginData.type = info.type || "test",
+        state.loginData.utouId = info.utouId || "test",
+        state.loginData.roomId = info.roomId || "test",
+        state.loginData.groupId = info.groupId || "test"
     }
   },
   actions: {

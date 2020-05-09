@@ -22,10 +22,17 @@
         </b-col>
       </b-row>
     </b-container>
-    <amplify-connect :mutation="createGameInfoMutation" @done="onCreatedFinished">
-      <template slot-scope="{ loading, mutate }">
+    <amplify-connect :query="getGameInfo" :subscription="createGameInfoSubscription">
+      <template slot-scope="{loading, data}">
         <div v-if="loading">Loading...</div>
-        <!-- <div v-else-if="errors.length > 0">error</div> -->
+
+        <div v-else-if="data">{{data.getGameInfo.id}}</div>
+      </template>
+    </amplify-connect>
+    <amplify-connect :mutation="createGameInfoMutation" @done="onCreatedFinished">
+      <template slot-scope="{ loading, errors, mutate }">
+        <div v-if="loading">Loading...</div>
+        <div v-else-if="errors.length > 0">error</div>
         <b-button variant="outline-primary" @click="mutate" class="mt-2">create</b-button>
       </template>
     </amplify-connect>
@@ -51,6 +58,16 @@ const getGameInfoQuery = /* GraphQL */ `
     }
   }
 `;
+
+const OnCreateGameInfoSubscription = `subscription OnCreateGameInfo {
+      onCreateGameInfo {
+      id
+      type
+      owner
+      werewolf
+      people
+      }
+    }`;
 
 const CreateGameInfoMutation = `mutation CreateGameInfo(
     $id: ID!,
@@ -90,9 +107,16 @@ export default {
     this.initializeLiff();
     this.participate();
     this.checkRoomid();
-    this.getGameInfo();
   },
   computed: {
+    getGameInfo() {
+      return this.$Amplify.graphqlOperation(getGameInfoQuery, {
+        id: this.roomid
+      });
+    },
+    createGameInfoSubscription() {
+      return this.$Amplify.graphqlOperation(OnCreateGameInfoSubscription);
+    },
     createGameInfoMutation() {
       return this.$Amplify.graphqlOperation(CreateGameInfoMutation, {
         id: this.roomid,
@@ -105,9 +129,10 @@ export default {
   },
   methods: {
     initializeLiff: function() {
+      console.log(process.env.development);
       liff.init(
         {
-          liffId: process.env.development
+          liffId: process.env.VUE_APP_LIFF_ID
         },
         () => {
           const idToken = liff.getContext();
@@ -115,12 +140,13 @@ export default {
         }
       );
     },
-    getGameInfo: async function() {
-      const room = await API.graphql(
-        graphqlOperation(getGameInfoQuery, { id: this.roomid })
-      );
-      console.log(room);
-    },
+    // getGameInfo: async function() {
+    //   const room = await API.graphql(
+    //     graphqlOperation(getGameInfoQuery, { id: this.roomid })
+    //   );
+    //   console.log(room);
+    //   return room;
+    // },
     // 今度type をみてそれでroomId を決定する
     checkRoomid: function() {
       this.type = this.$store.state.loginData.type;
