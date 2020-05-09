@@ -8,6 +8,7 @@ export default new Vuex.Store({
     loginData: {
       userId: "test",
       type: "test",
+      owner: "test",
       utouId: "test",
       roomId: "test",
       groupId: "test"
@@ -15,11 +16,12 @@ export default new Vuex.Store({
   },
   mutations: {
     setLoginData(state, info) {
-      state.loginData.userId = info.userId || "test",
-        state.loginData.type = info.type || "test",
-        state.loginData.utouId = info.utouId || "test",
-        state.loginData.roomId = info.roomId || "test",
-        state.loginData.groupId = info.groupId || "test"
+      state.loginData.userId = info.userId,
+        state.loginData.type = info.type,
+        state.loginData.owner = info.owner,
+        state.loginData.utouId = info.utouId,
+        state.loginData.roomId = info.roomId,
+        state.loginData.groupId = info.groupId
     }
   },
   actions: {

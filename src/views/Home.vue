@@ -100,7 +100,15 @@ export default {
       type: "test",
       owner: "test",
       werewolf: 2,
-      people: 6
+      people: 6,
+      loginData: {
+        userId: "",
+        type: "",
+        owner: "",
+        utouId: "",
+        roomId: "test",
+        groupId: ""
+      }
     };
   },
   created() {
@@ -111,7 +119,7 @@ export default {
   computed: {
     getGameInfo() {
       return this.$Amplify.graphqlOperation(getGameInfoQuery, {
-        id: this.roomid
+        id: this.loginData.roomid
       });
     },
     createGameInfoSubscription() {
@@ -137,6 +145,8 @@ export default {
         () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
+          this.loginData = idToken;
+          console.log(this.loginData);
         }
       );
     },
@@ -152,6 +162,7 @@ export default {
       this.type = this.$store.state.loginData.type;
       this.roomid = this.$store.state.loginData.groupId;
       this.owner = this.$store.state.loginData.owner;
+      console.log("type", this.type);
     },
     participate: function() {
       console.log("participate");
