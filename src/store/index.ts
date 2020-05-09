@@ -8,7 +8,7 @@ export default new Vuex.Store({
     loginData: {
       userId: "test",
       type: "test",
-      owner: "test",
+      owner: "",
       utouId: "test",
       roomId: "test",
       groupId: "test"

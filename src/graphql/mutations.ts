@@ -48,6 +48,9 @@ export const createGameInfo = /* GraphQL */ `
       type
       owner
       werewolf
+      villager
+      diviner
+      brave
       people
     }
   }
@@ -62,6 +65,9 @@ export const updateGameInfo = /* GraphQL */ `
       type
       owner
       werewolf
+      villager
+      diviner
+      brave
       people
     }
   }
@@ -76,6 +82,9 @@ export const deleteGameInfo = /* GraphQL */ `
       type
       owner
       werewolf
+      villager
+      diviner
+      brave
       people
     }
   }

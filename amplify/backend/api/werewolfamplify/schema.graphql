@@ -9,5 +9,8 @@ type GameInfo @model {
   type: String!
   owner: String!
   werewolf: Int!
+  villager: Int!
+  diviner: Int!
+  brave: Int!
   people: Int!
 }

@@ -34,6 +34,9 @@ export const getGameInfo = /* GraphQL */ `
       type
       owner
       werewolf
+      villager
+      diviner
+      brave
       people
     }
   }
@@ -50,6 +53,9 @@ export const listGameInfos = /* GraphQL */ `
         type
         owner
         werewolf
+        villager
+        diviner
+        brave
         people
       }
       nextToken
