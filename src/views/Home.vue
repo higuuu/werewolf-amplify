@@ -248,7 +248,6 @@ export default {
           this.$store.dispatch("setLoginData", idToken);
           this.checkRoomid();
           const checker = await this.getGameInfoOnce();
-          console.log("che", checker);
           if (checker !== null) {
             // !== の時が本来の動き
             this.$router.push("/waitingroom");
@@ -258,7 +257,8 @@ export default {
     },
     checkRoomid: async function() {
       if (this.$store.state.loginData === null) {
-        this.roomId = "test"; //試験的に
+        // ブラウザからログインしたときに代わりに入れてあげる
+        this.roomId = "test";
         this.type = "test";
         this.ownerId = "test";
         console.log("type", this.type);

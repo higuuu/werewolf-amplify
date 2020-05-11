@@ -1,6 +1,6 @@
 <template>
   <div class="waitingroom">
-    <h1>This is an WaitingRoom page</h1>
+    <h4>あなたは{{ this.gameRole }}です。</h4>
   </div>
 </template>
 
@@ -12,13 +12,18 @@ export default {
   data() {
     return {
       isOwner: null,
+      gameRole: null,
       loginData: this.$store.state.loginData
     };
   },
   created() {
-    this.isOwner = () => {
-      return this.loginData.userID === null; //todo
-    };
+    this.isOwner = this.loginData.userID === this.loginData.ownerId; //todo
+    if (this.isOwner) {
+      this.gameRole = "主催者";
+    } else {
+      this.gameRole = "参加者";
+    }
+    console.log(this.isOwner);
   },
   computed: {},
   methods: {}
