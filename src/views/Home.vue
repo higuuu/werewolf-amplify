@@ -248,7 +248,8 @@ export default {
           this.$store.dispatch("setLoginData", idToken);
           this.checkRoomid();
           const checker = this.getGameInfoOnce();
-          if (checker === null) {
+          if (checker !== null) {
+            // !== の時が本来の動き
             this.$router.push("/waitingroom");
           }
         }
