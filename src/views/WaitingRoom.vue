@@ -10,9 +10,16 @@ import { API, graphqlOperation } from "aws-amplify";
 export default {
   name: "WaitingRoom",
   data() {
-    return {};
+    return {
+      isOwner: null,
+      loginData: this.$store.state.loginData
+    };
   },
-  // created() {},
+  created() {
+    this.isOwner = () => {
+      return this.loginData.userID === null; //todo
+    };
+  },
   computed: {},
   methods: {}
 };

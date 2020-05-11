@@ -118,7 +118,7 @@ const getGameInfoQuery = /* GraphQL */ `
       id
       type
       owner
-      owner_id
+      ownerId
       werewolf
       villager
       diviner
@@ -133,7 +133,7 @@ const OnCreateGameInfoSubscription = `subscription OnCreateGameInfo {
       id
       type
       owner
-      owner_id
+      ownerId
       werewolf
       villager
       diviner
@@ -146,7 +146,7 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
     $id: ID!,
     $type: String!,
     $owner: String!,
-    $owner_id: String!,
+    $ownerId: String!,
     $werewolf: Int!,
     $villager: Int!,
     $diviner: Int!,
@@ -157,7 +157,7 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
         id: $id,
         type:$type,
         owner:$owner,
-        owner_id:$owner_id,
+        ownerId:$ownerId,
         werewolf:$werewolf,
         villager:$villager,
         diviner:$diviner,
@@ -167,7 +167,7 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
     id
     type
     owner
-    owner_id
+    ownerId
     werewolf
     villager
     diviner
@@ -197,7 +197,7 @@ export default {
       roomId: "",
       type: "",
       owner: "",
-      owner_id: "",
+      ownerId: "",
       werewolf: 2,
       villager: 2,
       diviner: 1,
@@ -227,7 +227,7 @@ export default {
         id: this.roomId,
         type: this.type,
         owner: this.owner,
-        owner_id: this.owner_id,
+        ownerId: this.ownerId,
         werewolf: this.werewolf,
         villager: this.villager,
         diviner: this.diviner,
@@ -243,11 +243,12 @@ export default {
         {
           liffId: process.env.VUE_APP_LIFF_ID
         },
-        () => {
+        async () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
           this.checkRoomid();
-          const checker = this.getGameInfoOnce();
+          const checker = await this.getGameInfoOnce();
+          console.log("che", checker);
           if (checker !== null) {
             // !== の時が本来の動き
             this.$router.push("/waitingroom");
@@ -259,14 +260,14 @@ export default {
       if (this.$store.state.loginData === null) {
         this.roomId = "test"; //試験的に
         this.type = "test";
-        this.owner_id = "test";
+        this.ownerId = "test";
         console.log("type", this.type);
         console.log(this.roomId);
         return;
       } else {
         this.type = this.$store.state.loginData.type;
         this.owner = this.$store.state.loginData.owner;
-        this.owner_id = this.$store.state.loginData.userId;
+        this.ownerId = this.$store.state.loginData.userId;
       }
       if (this.type === "group") {
         this.roomId = this.$store.state.loginData.groupId;
@@ -282,9 +283,12 @@ export default {
       const room = await API.graphql(
         graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );
+      this.$store.dispatch("setGameInfo", room.data);
+      console.log(this.$store.state.gameInfo);
       return room.data.getGameInfo.id || null;
     },
     runGame: function() {
+      //ゲーム作成済みなら作成画面を表示しない
       if (this.roomId === "test") {
         return true;
       } else {

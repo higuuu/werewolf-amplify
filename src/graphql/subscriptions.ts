@@ -35,7 +35,7 @@ export const onCreateGameInfo = /* GraphQL */ `
       id
       type
       owner
-      owner_id
+      ownerId
       werewolf
       villager
       diviner
@@ -50,7 +50,7 @@ export const onUpdateGameInfo = /* GraphQL */ `
       id
       type
       owner
-      owner_id
+      ownerId
       werewolf
       villager
       diviner
@@ -65,7 +65,7 @@ export const onDeleteGameInfo = /* GraphQL */ `
       id
       type
       owner
-      owner_id
+      ownerId
       werewolf
       villager
       diviner

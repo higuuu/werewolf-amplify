@@ -8,7 +8,7 @@ type GameInfo @model {
   id: ID!
   type: String!
   owner: String!
-  owner_id: String!
+  ownerId: String!
   werewolf: Int!
   villager: Int!
   diviner: Int!
