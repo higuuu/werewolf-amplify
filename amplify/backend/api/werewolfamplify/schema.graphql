@@ -14,4 +14,6 @@ type GameInfo @model {
   diviner: Int!
   brave: Int!
   people: Int!
+  players: [String]
+  state: String
 }

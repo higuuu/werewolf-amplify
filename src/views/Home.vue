@@ -85,17 +85,14 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- <amplify-connect :query="getGameInfo" :subscription="createGameInfoSubscription">
-      <template slot-scope="{loading, data}">
-        <div v-if="loading">Loading...</div>
-
-        <div v-else-if="data">{{data.getGameInfo.id}}</div>
-      </template>
-    </amplify-connect>-->
     <amplify-connect :mutation="createGameInfoMutation" @done="goWaiting">
       <template slot-scope="{ loading, errors, mutate }">
         <div v-if="loading">Loading...</div>
-        <div v-else-if="errors.length > 0">error</div>
+        <div v-else-if="errors.length > 0">
+          エラーが発生しました.
+          <br />既にルームがある可能性があります.
+          <br />参加を押してみてください
+        </div>
         <b-button variant="outline-primary" @click="mutate" class="mt-2">
           <b-icon icon="clipboard" aria-hidden="true" />ゲームを開催する
         </b-button>
@@ -124,6 +121,8 @@ const getGameInfoQuery = /* GraphQL */ `
       diviner
       brave
       people
+      players
+      state
     }
   }
 `;
@@ -139,6 +138,8 @@ const OnCreateGameInfoSubscription = `subscription OnCreateGameInfo {
       diviner
       brave
       people
+      players
+      state
       }
     }`;
 
@@ -151,7 +152,9 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
     $villager: Int!,
     $diviner: Int!,
     $brave: Int!,
-    $people: Int!
+    $people: Int!,
+    $players: [String],
+    $state: String
     ){
     createGameInfo(input: {     
         id: $id,
@@ -162,7 +165,9 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
         villager:$villager,
         diviner:$diviner,
         brave:$brave,
-        people:$people
+        people:$people,
+        players:$players,
+        state:$state
   }){
     id
     type
@@ -173,6 +178,8 @@ const CreateGameInfoMutation = `mutation CreateGameInfo(
     diviner
     brave
     people
+    players
+    state
   }
 }
 `;
@@ -191,7 +198,7 @@ export default {
         { value: 6, text: "6" },
         { value: 7, text: "7" },
         { value: 8, text: "8" },
-        { value: 8, text: "9" }
+        { value: 9, text: "9" }
       ],
       paticipatant: false,
       roomId: "",
@@ -202,7 +209,9 @@ export default {
       villager: 2,
       diviner: 1,
       brave: 1,
-      people: 6
+      people: 6,
+      players: [],
+      state: ""
     };
   },
   created() {
@@ -232,7 +241,9 @@ export default {
         villager: this.villager,
         diviner: this.diviner,
         brave: this.brave,
-        people: this.people
+        people: this.people,
+        players: this.players,
+        state: this.state
       });
     }
   },
@@ -246,7 +257,7 @@ export default {
         async () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
-          this.checkRoomid();
+          await this.checkRoomid();
           const checker = await this.getGameInfoOnce();
           if (checker !== null) {
             // !== の時が本来の動き
@@ -255,7 +266,7 @@ export default {
         }
       );
     },
-    checkRoomid: async function() {
+    checkRoomid: function() {
       if (this.$store.state.loginData === null) {
         // ブラウザからログインしたときに代わりに入れてあげる
         this.roomId = "test";
@@ -263,17 +274,22 @@ export default {
         this.ownerId = "test";
         console.log("type", this.type);
         console.log(this.roomId);
+        this.players.push(this.ownerId);
+        this.state = "waitng";
         return;
       } else {
         this.type = this.$store.state.loginData.type;
         this.owner = this.$store.state.loginData.owner;
         this.ownerId = this.$store.state.loginData.userId;
+        this.players.push(this.ownerId);
+        this.state = "waitng";
       }
       if (this.type === "group") {
         this.roomId = this.$store.state.loginData.groupId;
       } else if (this.type === "room") {
         this.roomId = this.$store.state.loginData.roomId;
       }
+      return;
     },
     participate: function() {
       console.log("participate");

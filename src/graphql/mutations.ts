@@ -53,6 +53,8 @@ export const createGameInfo = /* GraphQL */ `
       diviner
       brave
       people
+      players
+      state
     }
   }
 `;
@@ -71,6 +73,8 @@ export const updateGameInfo = /* GraphQL */ `
       diviner
       brave
       people
+      players
+      state
     }
   }
 `;
@@ -89,6 +93,8 @@ export const deleteGameInfo = /* GraphQL */ `
       diviner
       brave
       people
+      players
+      state
     }
   }
 `;

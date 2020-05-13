@@ -76,6 +76,8 @@ export type CreateGameInfoInput = {
   diviner: number,
   brave: number,
   people: number,
+  players?: Array< string | null > | null,
+  state?: string | null,
 };
 
 export type ModelGameInfoConditionInput = {
@@ -87,6 +89,8 @@ export type ModelGameInfoConditionInput = {
   diviner?: ModelIntInput | null,
   brave?: ModelIntInput | null,
   people?: ModelIntInput | null,
+  players?: ModelStringInput | null,
+  state?: ModelStringInput | null,
   and?: Array< ModelGameInfoConditionInput | null > | null,
   or?: Array< ModelGameInfoConditionInput | null > | null,
   not?: ModelGameInfoConditionInput | null,
@@ -114,6 +118,8 @@ export type UpdateGameInfoInput = {
   diviner?: number | null,
   brave?: number | null,
   people?: number | null,
+  players?: Array< string | null > | null,
+  state?: string | null,
 };
 
 export type DeleteGameInfoInput = {
@@ -155,6 +161,8 @@ export type ModelGameInfoFilterInput = {
   diviner?: ModelIntInput | null,
   brave?: ModelIntInput | null,
   people?: ModelIntInput | null,
+  players?: ModelStringInput | null,
+  state?: ModelStringInput | null,
   and?: Array< ModelGameInfoFilterInput | null > | null,
   or?: Array< ModelGameInfoFilterInput | null > | null,
   not?: ModelGameInfoFilterInput | null,
@@ -219,6 +227,8 @@ export type CreateGameInfoMutation = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -239,6 +249,8 @@ export type UpdateGameInfoMutation = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -259,6 +271,8 @@ export type DeleteGameInfoMutation = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -310,6 +324,8 @@ export type GetGameInfoQuery = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -333,6 +349,8 @@ export type ListGameInfosQuery = {
       diviner: number,
       brave: number,
       people: number,
+      players: Array< string | null > | null,
+      state: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -377,6 +395,8 @@ export type OnCreateGameInfoSubscription = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -392,6 +412,8 @@ export type OnUpdateGameInfoSubscription = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };
 
@@ -407,5 +429,7 @@ export type OnDeleteGameInfoSubscription = {
     diviner: number,
     brave: number,
     people: number,
+    players: Array< string | null > | null,
+    state: string | null,
   } | null,
 };

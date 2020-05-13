@@ -39,6 +39,8 @@ export const getGameInfo = /* GraphQL */ `
       diviner
       brave
       people
+      players
+      state
     }
   }
 `;
@@ -59,6 +61,8 @@ export const listGameInfos = /* GraphQL */ `
         diviner
         brave
         people
+        players
+        state
       }
       nextToken
     }

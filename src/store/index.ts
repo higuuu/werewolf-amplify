@@ -22,7 +22,9 @@ export default new Vuex.Store({
       villager: 0,
       diviner: 0,
       brave: 0,
-      people: 0
+      people: 0,
+      players: [],
+      state: ""
     }
   },
   mutations: {
