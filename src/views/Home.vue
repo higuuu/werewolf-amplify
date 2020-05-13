@@ -299,7 +299,7 @@ export default {
       const room = await API.graphql(
         graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );
-      this.$store.dispatch("setGameInfo", room.data);
+      this.$store.dispatch("setGameInfo", room.data.getGameInfo);
       console.log(this.$store.state.gameInfo);
       return room.data.getGameInfo.id || null;
     },

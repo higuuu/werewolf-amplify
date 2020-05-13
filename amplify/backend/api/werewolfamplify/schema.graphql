@@ -17,3 +17,8 @@ type GameInfo @model {
   players: [String]
   state: String
 }
+
+type PlayerInfo @model {
+  liffid: ID!
+  position: String
+}
