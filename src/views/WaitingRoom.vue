@@ -38,7 +38,7 @@ export default {
     };
   },
   created() {
-    this.isOwner = this.loginData.userID === this.loginData.ownerId;
+    this.isOwner = this.loginData.userID === this.gameInfo.ownerId;
     // アカウント作成APIを用意する
   },
   computed: {},
