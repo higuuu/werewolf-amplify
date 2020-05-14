@@ -15,10 +15,10 @@
             label-for="input-formatter"
             description="他の人と名前が被らないように入力してください"
           >
-            <b-form-input v-model="participateName" placeholder="name" :formatter="formatter"></b-form-input>
+            <b-form-input v-model="participateName" placeholder="name"></b-form-input>
           </b-form-group>
           <b-button-group class="mt-2" v-show="!this.isOwner">
-            <b-button variant="success">
+            <b-button variant="success" @click="participate">
               <b-icon icon="clipboard" aria-hidden="true" />ゲームに参加する
             </b-button>
           </b-button-group>
@@ -55,7 +55,11 @@ export default {
     // アカウント作成APIを用意する
   },
   computed: {},
-  methods: {}
+  methods: {
+    participate: function() {
+      // console.log(this.participateName);
+    }
+  }
 };
 </script>
 
