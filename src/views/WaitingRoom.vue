@@ -7,17 +7,29 @@
       <br />ゲームを作成しました。
     </h4>
     <b-container fluid class="mt-4">
-      <b-row class="mt-3">
+      <b-row v-show="!isOwner">
+        <b-col cols="8" offset="2">
+          <b-form-group
+            class="mb-0"
+            label="名前を入力してください"
+            label-for="input-formatter"
+            description="他の人と名前が被らないように入力してください"
+          >
+            <b-form-input v-model="participateName" placeholder="name" :formatter="formatter"></b-form-input>
+          </b-form-group>
+          <b-button-group class="mt-2" v-show="!this.isOwner">
+            <b-button variant="success">
+              <b-icon icon="clipboard" aria-hidden="true" />ゲームに参加する
+            </b-button>
+          </b-button-group>
+        </b-col>
+      </b-row>
+      <b-row class="mt-4">
         <b-col cols="8" offset="2">
           <h5>参加者一覧</h5>
           <ul>
             <li>{{ this.$store.state.gameInfo.owner }}さん</li>
           </ul>
-          <b-button-group class="mt-4" v-show="!this.isOwner">
-            <b-button variant="success">
-              <b-icon icon="clipboard" aria-hidden="true" />ゲームに参加する
-            </b-button>
-          </b-button-group>
         </b-col>
       </b-row>
     </b-container>
@@ -31,6 +43,7 @@ export default {
   name: "WaitingRoom",
   data() {
     return {
+      participateName: "",
       isOwner: false, // ローカルで参加者としてはいるためにはfalse
       gameRole: null,
       loginData: this.$store.state.loginData,
