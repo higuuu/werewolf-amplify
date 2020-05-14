@@ -291,9 +291,16 @@ export default {
       }
       return;
     },
-    participate: function() {
+    participate: async function() {
       console.log("participate");
       this.paticipatant = true;
+      const checker = await this.getGameInfoOnce();
+      if (checker !== null) {
+        // !== の時が本来の動き
+        this.$router.push("/waitingroom");
+      } else {
+        alert("ゲームが設定されていません");
+      }
     },
     getGameInfoOnce: async function() {
       const room = await API.graphql(
