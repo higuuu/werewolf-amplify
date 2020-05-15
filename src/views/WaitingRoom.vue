@@ -30,7 +30,7 @@
           <ul>
             <li>{{ this.$store.state.gameInfo.owner }}さん</li>
           </ul>
-          <div>{{this.player.userName}}</div>
+          <div>{{ player.userName }}</div>
         </b-col>
       </b-row>
     </b-container>
@@ -55,7 +55,7 @@ export default {
       vote: "",
       loginData: null,
       gameInfo: null,
-      player: null
+      player: { userName: "" }
     };
   },
   async created() {
