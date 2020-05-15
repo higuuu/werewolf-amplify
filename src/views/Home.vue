@@ -257,6 +257,17 @@ export default {
         async () => {
           const idToken = liff.getContext();
           this.$store.dispatch("setLoginData", idToken);
+          if (idToken === null) {
+            this.$store.dispatch("setLoginData", {
+              userId: "test",
+              type: "test",
+              owner: "test",
+              utouId: "test",
+              roomId: "test",
+              groupId: "test"
+            });
+            console.log(this.$store.state.loginData);
+          }
           await this.checkRoomid();
           const checker = await this.getGameInfoOnce();
           if (checker !== null) {
@@ -267,13 +278,14 @@ export default {
       );
     },
     checkRoomid: function() {
-      if (this.$store.state.loginData === null) {
+      console.log("kkkk");
+      console.log(this.$store.state.loginData.userId);
+      if (this.$store.state.loginData.userId === "test") {
         // ブラウザからログインしたときに代わりに入れてあげる
-        this.roomId = "test";
         this.type = "test";
+        this.owner = "test";
         this.ownerId = "test";
-        console.log("type", this.type);
-        console.log(this.roomId);
+        this.roomId = "test";
         this.players.push(this.ownerId);
         this.state = "waitng";
         return;

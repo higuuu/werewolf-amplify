@@ -50,9 +50,9 @@ export default {
       isOwner: false, // ローカルで参加者としてはいるためにはfalse
       // gameRole: null,
       roomUserId: "",
-      position: "",
-      actions: [""],
-      vote: "",
+      position: "test",
+      actions: ["test"],
+      vote: "test",
       loginData: null,
       gameInfo: null,
       player: { userName: "" }
@@ -71,13 +71,11 @@ export default {
   computed: {},
   methods: {
     participate: async function() {
-      // console.log(this.participateName);
-      const participateName = this.participateName || "test";
+      const participateName = this.participateName;
       const position = this.position || "test";
       const state = this.gameInfo.state || "test";
-      const actions = this.actions || "test";
+      const actions = this.actions || ["test"];
       const vote = this.vote || "test";
-
       this.roomUserId = this.gameInfo.roomId + this.loginData.userId;
       this.player = await API.graphql(
         graphqlOperation(mutations.createPlayer, {
