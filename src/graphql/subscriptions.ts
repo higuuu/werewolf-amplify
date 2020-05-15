@@ -80,3 +80,114 @@ export const onDeleteGameInfo = /* GraphQL */ `
     }
   }
 `;
+export const onCreatePlayersInfo = /* GraphQL */ `
+  subscription OnCreatePlayersInfo {
+    onCreatePlayersInfo {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const onUpdatePlayersInfo = /* GraphQL */ `
+  subscription OnUpdatePlayersInfo {
+    onUpdatePlayersInfo {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const onDeletePlayersInfo = /* GraphQL */ `
+  subscription OnDeletePlayersInfo {
+    onDeletePlayersInfo {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const onCreatePlayer = /* GraphQL */ `
+  subscription OnCreatePlayer {
+    onCreatePlayer {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const onUpdatePlayer = /* GraphQL */ `
+  subscription OnUpdatePlayer {
+    onUpdatePlayer {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const onDeletePlayer = /* GraphQL */ `
+  subscription OnDeletePlayer {
+    onDeletePlayer {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;

@@ -30,6 +30,7 @@
           <ul>
             <li>{{ this.$store.state.gameInfo.owner }}さん</li>
           </ul>
+          <div>{{this.player.userName}}</div>
         </b-col>
       </b-row>
     </b-container>
@@ -38,6 +39,8 @@
 
 <script>
 import { API, graphqlOperation } from "aws-amplify";
+import * as queries from "./../graphql/queries";
+import * as mutations from "./../graphql/mutations";
 
 export default {
   name: "WaitingRoom",
@@ -45,19 +48,50 @@ export default {
     return {
       participateName: "",
       isOwner: false, // ローカルで参加者としてはいるためにはfalse
-      gameRole: null,
-      loginData: this.$store.state.loginData,
-      gameInfo: this.$store.state.gameInfo
+      // gameRole: null,
+      roomUserId: "",
+      position: "",
+      actions: [""],
+      vote: "",
+      loginData: null,
+      gameInfo: null,
+      player: null
     };
   },
-  created() {
-    this.isOwner = this.loginData.userID === this.gameInfo.ownerId;
+  async created() {
+    this.loginData = this.$store.state.loginData;
+    this.gameInfo = this.$store.state.gameInfo;
+    // Simple query 試しにやってみてい
+    const allTodos = await API.graphql(graphqlOperation(queries.listTodos));
+    console.log(allTodos);
+
+    this.isOwner = this.loginData.userId === this.gameInfo.ownerId;
     // アカウント作成APIを用意する
   },
   computed: {},
   methods: {
-    participate: function() {
+    participate: async function() {
       // console.log(this.participateName);
+      const participateName = this.participateName || "test";
+      const position = this.position || "test";
+      const state = this.gameInfo.state || "test";
+      const actions = this.actions || "test";
+      const vote = this.vote || "test";
+
+      this.roomUserId = this.gameInfo.roomId + this.loginData.userId;
+      this.player = await API.graphql(
+        graphqlOperation(mutations.createPlayer, {
+          id: this.loginData.roomUserId,
+          userId: this.loginData.userId,
+          userName: participateName,
+          position: position,
+          state: state,
+          actions: actions,
+          vote: vote
+        })
+      );
+      this.$store.setPlayer(this.player);
+      console.log(this.$store.stae.player.userName);
     }
   }
 };

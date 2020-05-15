@@ -25,6 +25,14 @@ export default new Vuex.Store({
       people: 0,
       players: [],
       state: ""
+    },
+    player: {
+      userId: "",
+      userName: "",
+      position: "",
+      state: "",
+      actions: [""],
+      vote: ""
     }
   },
   mutations: {
@@ -33,6 +41,9 @@ export default new Vuex.Store({
     },
     setGameInfo(state, info) {
       state.gameInfo = info
+    },
+    setPlayer(state, info) {
+      state.player = info
     }
   },
   actions: {
@@ -41,6 +52,9 @@ export default new Vuex.Store({
     },
     setGameInfo(context, info) {
       context.commit('setGameInfo', info)
+    },
+    setPlayer(context, info) {
+      context.commit('setPlayer', info)
     }
   },
   getters: {
@@ -49,6 +63,9 @@ export default new Vuex.Store({
     },
     getGameInfo(state) {
       return state.gameInfo
+    },
+    getPlayer(state) {
+      return state.player
     }
   },
   modules: {}

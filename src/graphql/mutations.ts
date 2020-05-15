@@ -98,3 +98,132 @@ export const deleteGameInfo = /* GraphQL */ `
     }
   }
 `;
+export const createPlayersInfo = /* GraphQL */ `
+  mutation CreatePlayersInfo(
+    $input: CreatePlayersInfoInput!
+    $condition: ModelPlayersInfoConditionInput
+  ) {
+    createPlayersInfo(input: $input, condition: $condition) {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const updatePlayersInfo = /* GraphQL */ `
+  mutation UpdatePlayersInfo(
+    $input: UpdatePlayersInfoInput!
+    $condition: ModelPlayersInfoConditionInput
+  ) {
+    updatePlayersInfo(input: $input, condition: $condition) {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const deletePlayersInfo = /* GraphQL */ `
+  mutation DeletePlayersInfo(
+    $input: DeletePlayersInfoInput!
+    $condition: ModelPlayersInfoConditionInput
+  ) {
+    deletePlayersInfo(input: $input, condition: $condition) {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const createPlayer = /* GraphQL */ `
+  mutation CreatePlayer(
+    $input: CreatePlayerInput!
+    $condition: ModelPlayerConditionInput
+  ) {
+    createPlayer(input: $input, condition: $condition) {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const updatePlayer = /* GraphQL */ `
+  mutation UpdatePlayer(
+    $input: UpdatePlayerInput!
+    $condition: ModelPlayerConditionInput
+  ) {
+    updatePlayer(input: $input, condition: $condition) {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const deletePlayer = /* GraphQL */ `
+  mutation DeletePlayer(
+    $input: DeletePlayerInput!
+    $condition: ModelPlayerConditionInput
+  ) {
+    deletePlayer(input: $input, condition: $condition) {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;

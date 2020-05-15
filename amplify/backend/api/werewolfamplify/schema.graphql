@@ -18,7 +18,25 @@ type GameInfo @model {
   state: String
 }
 
-type PlayerInfo @model {
-  liffid: ID!
+type PlayersInfo @model {
+  roomId: ID!
+  times: Int!
+  alives: [String]
+  deads: [String]
+  startTime: AWSDate
+  gameState: String
+  playersVotes: [String]
+  werewolfVotes: [String]
+  defenceTargets: [String]
+  players: [Player]
+}
+
+type Player @model{
+  id: ID!
+  userId: String
+  userName: String
   position: String
+  state: String
+  actions: [String]
+  vote: String
 }

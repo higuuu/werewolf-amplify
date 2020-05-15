@@ -68,3 +68,91 @@ export const listGameInfos = /* GraphQL */ `
     }
   }
 `;
+export const getPlayersInfo = /* GraphQL */ `
+  query GetPlayersInfo($id: ID!) {
+    getPlayersInfo(id: $id) {
+      roomId
+      times
+      alives
+      deads
+      startTime
+      gameState
+      playersVotes
+      werewolfVotes
+      defenceTargets
+      players {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+    }
+  }
+`;
+export const listPlayersInfos = /* GraphQL */ `
+  query ListPlayersInfos(
+    $filter: ModelPlayersInfoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlayersInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        roomId
+        times
+        alives
+        deads
+        startTime
+        gameState
+        playersVotes
+        werewolfVotes
+        defenceTargets
+        players {
+          id
+          userId
+          userName
+          position
+          state
+          actions
+          vote
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getPlayer = /* GraphQL */ `
+  query GetPlayer($id: ID!) {
+    getPlayer(id: $id) {
+      id
+      userId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const listPlayers = /* GraphQL */ `
+  query ListPlayers(
+    $filter: ModelPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+      nextToken
+    }
+  }
+`;
