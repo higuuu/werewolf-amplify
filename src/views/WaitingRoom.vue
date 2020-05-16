@@ -71,19 +71,20 @@ export default {
 
     this.isOwner = this.loginData.userId === this.gameInfo.ownerId;
     if (this.isOwner) {
-      this.participateName = this.$sotre.state.gameInfo.owner || "test";
+      this.participateName = this.$store.state.gameInfo.owner || "test";
       this.participate();
-      const name = this.gameInfo.owner || "test";
-      // this.players.push(name);
     }
     // アカウント作成APIを用意する
   },
   async mounted() {
     // Subscribe to creation of Todo
+
     const subscription = await API.graphql(
       graphqlOperation(subscriptions.onCreatePlayer)
     ).subscribe({
       next: data => {
+        console.log("online", data.value.data.onCreatePlayer.roomId);
+        console.log(this.$store.state.gameInfo.roomId);
         if (
           data.value.data.onCreatePlayer.roomId ==
           this.$store.state.gameInfo.roomId
