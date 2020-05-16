@@ -329,10 +329,6 @@ export default {
         return true;
       }
     },
-    goWaiting() {
-      alert("送信しました");
-      this.$router.push("/waitingroom");
-    },
     organize: function() {
       console.log("organize");
     },
