@@ -33,7 +33,7 @@
         <b-col cols="8" offset="2">
           <h5>参加者一覧</h5>
           <ul>
-            <li>{{ this.$store.state.gameInfo.owner }}さん</li>
+            <li v-for="item in players" :key="item">{{ item }}さん</li>
           </ul>
           <div>{{ player.userName }}</div>
         </b-col>
@@ -54,7 +54,7 @@ export default {
     return {
       players: [],
       participateName: "",
-      isOwner: false, // ローカルで参加者としてはいるためにはfalse
+      isOwner: true, // ローカルで参加者としてはいるためにはfalse
       // gameRole: null,
       roomUserId: "",
       position: "test",
@@ -73,6 +73,8 @@ export default {
     if (this.isOwner) {
       this.participateName = this.$sotre.state.gameInfo.owner || "test";
       this.participate();
+      const name = this.gameInfo.owner || "test";
+      // this.players.push(name);
     }
     // アカウント作成APIを用意する
   },
