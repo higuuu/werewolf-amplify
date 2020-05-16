@@ -80,15 +80,7 @@ export const getPlayersInfo = /* GraphQL */ `
       playersVotes
       werewolfVotes
       defenceTargets
-      players {
-        id
-        userId
-        userName
-        position
-        state
-        actions
-        vote
-      }
+      players
     }
   }
 `;
@@ -109,15 +101,7 @@ export const listPlayersInfos = /* GraphQL */ `
         playersVotes
         werewolfVotes
         defenceTargets
-        players {
-          id
-          userId
-          userName
-          position
-          state
-          actions
-          vote
-        }
+        players
       }
       nextToken
     }
@@ -128,6 +112,7 @@ export const getPlayer = /* GraphQL */ `
     getPlayer(id: $id) {
       id
       userId
+      roomId
       userName
       position
       state
@@ -146,6 +131,7 @@ export const listPlayers = /* GraphQL */ `
       items {
         id
         userId
+        roomId
         userName
         position
         state

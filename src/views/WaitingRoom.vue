@@ -17,9 +17,14 @@
           >
             <b-form-input v-model="participateName" placeholder="name"></b-form-input>
           </b-form-group>
-          <b-button-group class="mt-2" v-show="!this.isOwner">
+          <b-button-group class="mt-2 mr-2 ml-2" v-show="!this.isOwner">
             <b-button variant="success" @click="participate">
-              <b-icon icon="clipboard" aria-hidden="true" />ゲームに参加する
+              <b-icon icon="person-check-fill" class="mr-2" aria-hidden="true" />参加する
+            </b-button>
+          </b-button-group>
+          <b-button-group class="mt-2 mr-2 ml-2" v-show="!this.isOwner">
+            <b-button variant="danger" @click="leave">
+              <b-icon icon="box-arrow-left" class="mr-2" aria-hidden="true" />退場する
             </b-button>
           </b-button-group>
         </b-col>
@@ -39,13 +44,15 @@
 
 <script>
 import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "./../graphql/queries";
-import * as mutations from "./../graphql/mutations";
+import { getPlayer } from "./../graphql/queries";
+import * as subscriptions from "./../graphql/subscriptions";
+import { createPlayer, deletePlayer } from "./../graphql/mutations";
 
 export default {
   name: "WaitingRoom",
   data() {
     return {
+      players: [],
       participateName: "",
       isOwner: false, // ローカルで参加者としてはいるためにはfalse
       // gameRole: null,
@@ -61,35 +68,90 @@ export default {
   async created() {
     this.loginData = this.$store.state.loginData;
     this.gameInfo = this.$store.state.gameInfo;
-    // Simple query 試しにやってみてい
-    const allTodos = await API.graphql(graphqlOperation(queries.listTodos));
-    console.log(allTodos);
 
     this.isOwner = this.loginData.userId === this.gameInfo.ownerId;
+    if (this.isOwner) {
+      this.participateName = this.$sotre.state.gameInfo.owner || "test";
+      this.participate();
+    }
     // アカウント作成APIを用意する
   },
-  computed: {},
+  async mounted() {
+    // Subscribe to creation of Todo
+    const subscription = await API.graphql(
+      graphqlOperation(subscriptions.onCreatePlayer)
+    ).subscribe({
+      next: data => {
+        if (
+          data.value.data.onCreatePlayer.roomId ==
+          this.$store.state.gameInfo.roomId
+        ) {
+          this.players.push(data.value.data.onCreatePlayer);
+        }
+        console.log("tessst", data.value.data.onCreatePlayer);
+        console.log(this.players);
+      }
+    });
+    console.log(subscription);
+
+    const roomId = this.gameInfo.roomId || "test";
+    const result = await API.graphql(
+      graphqlOperation(getPlayer, { roomId: roomId })
+    );
+    console.log("mounted", result);
+  },
   methods: {
     participate: async function() {
       const participateName = this.participateName;
+      const roomId = this.gameInfo.roomId || "test";
       const position = this.position || "test";
       const state = this.gameInfo.state || "test";
       const actions = this.actions || ["test"];
       const vote = this.vote || "test";
-      this.roomUserId = this.gameInfo.roomId + this.loginData.userId;
-      this.player = await API.graphql(
-        graphqlOperation(mutations.createPlayer, {
-          id: this.loginData.roomUserId,
-          userId: this.loginData.userId,
-          userName: participateName,
-          position: position,
-          state: state,
-          actions: actions,
-          vote: vote
+      this.roomUserId = roomId + "-" + this.loginData.userId;
+      this.player = {
+        id: this.roomUserId,
+        userId: this.loginData.userId,
+        roomId: roomId,
+        userName: participateName,
+        position: position,
+        state: state,
+        actions: actions,
+        vote: vote
+      };
+      try {
+        // 初回作成時
+        const result = await API.graphql(
+          graphqlOperation(createPlayer, {
+            input: this.player
+          })
+        );
+        console.log("res", result);
+      } catch {
+        // 二回目以降の作成 消して再作成
+        await this.leave();
+        const result = await API.graphql(
+          graphqlOperation(createPlayer, {
+            input: this.player
+          })
+        );
+        console.log("res", result);
+      }
+
+      this.$store.dispatch("setPlayer", this.player);
+      console.log(this.$store.state.player.userName);
+    },
+    leave: async function() {
+      this.participateName = "";
+      const roomId = this.gameInfo.roomId || "test";
+      this.roomUserId = roomId + "-" + this.loginData.userId;
+      const result = await API.graphql(
+        graphqlOperation(deletePlayer, {
+          input: { id: this.roomUserId }
         })
       );
-      this.$store.setPlayer(this.player);
-      console.log(this.$store.stae.player.userName);
+      console.log("res", result);
+      return;
     }
   }
 };

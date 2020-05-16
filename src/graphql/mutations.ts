@@ -113,15 +113,7 @@ export const createPlayersInfo = /* GraphQL */ `
       playersVotes
       werewolfVotes
       defenceTargets
-      players {
-        id
-        userId
-        userName
-        position
-        state
-        actions
-        vote
-      }
+      players
     }
   }
 `;
@@ -140,15 +132,7 @@ export const updatePlayersInfo = /* GraphQL */ `
       playersVotes
       werewolfVotes
       defenceTargets
-      players {
-        id
-        userId
-        userName
-        position
-        state
-        actions
-        vote
-      }
+      players
     }
   }
 `;
@@ -167,15 +151,7 @@ export const deletePlayersInfo = /* GraphQL */ `
       playersVotes
       werewolfVotes
       defenceTargets
-      players {
-        id
-        userId
-        userName
-        position
-        state
-        actions
-        vote
-      }
+      players
     }
   }
 `;
@@ -187,6 +163,7 @@ export const createPlayer = /* GraphQL */ `
     createPlayer(input: $input, condition: $condition) {
       id
       userId
+      roomId
       userName
       position
       state
@@ -203,6 +180,7 @@ export const updatePlayer = /* GraphQL */ `
     updatePlayer(input: $input, condition: $condition) {
       id
       userId
+      roomId
       userName
       position
       state
@@ -219,6 +197,7 @@ export const deletePlayer = /* GraphQL */ `
     deletePlayer(input: $input, condition: $condition) {
       id
       userId
+      roomId
       userName
       position
       state

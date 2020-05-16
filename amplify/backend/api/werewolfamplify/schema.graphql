@@ -28,12 +28,13 @@ type PlayersInfo @model {
   playersVotes: [String]
   werewolfVotes: [String]
   defenceTargets: [String]
-  players: [Player]
+  players: [String]
 }
 
 type Player @model{
-  id: ID!
+  id: ID
   userId: String
+  roomId: String
   userName: String
   position: String
   state: String

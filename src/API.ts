@@ -136,6 +136,7 @@ export type CreatePlayersInfoInput = {
   playersVotes?: Array< string | null > | null,
   werewolfVotes?: Array< string | null > | null,
   defenceTargets?: Array< string | null > | null,
+  players?: Array< string | null > | null,
 };
 
 export type ModelPlayersInfoConditionInput = {
@@ -148,6 +149,7 @@ export type ModelPlayersInfoConditionInput = {
   playersVotes?: ModelStringInput | null,
   werewolfVotes?: ModelStringInput | null,
   defenceTargets?: ModelStringInput | null,
+  players?: ModelStringInput | null,
   and?: Array< ModelPlayersInfoConditionInput | null > | null,
   or?: Array< ModelPlayersInfoConditionInput | null > | null,
   not?: ModelPlayersInfoConditionInput | null,
@@ -179,6 +181,7 @@ export type UpdatePlayersInfoInput = {
   playersVotes?: Array< string | null > | null,
   werewolfVotes?: Array< string | null > | null,
   defenceTargets?: Array< string | null > | null,
+  players?: Array< string | null > | null,
 };
 
 export type DeletePlayersInfoInput = {
@@ -188,6 +191,7 @@ export type DeletePlayersInfoInput = {
 export type CreatePlayerInput = {
   id?: string | null,
   userId?: string | null,
+  roomId?: string | null,
   userName?: string | null,
   position?: string | null,
   state?: string | null,
@@ -197,6 +201,7 @@ export type CreatePlayerInput = {
 
 export type ModelPlayerConditionInput = {
   userId?: ModelStringInput | null,
+  roomId?: ModelStringInput | null,
   userName?: ModelStringInput | null,
   position?: ModelStringInput | null,
   state?: ModelStringInput | null,
@@ -210,6 +215,7 @@ export type ModelPlayerConditionInput = {
 export type UpdatePlayerInput = {
   id: string,
   userId?: string | null,
+  roomId?: string | null,
   userName?: string | null,
   position?: string | null,
   state?: string | null,
@@ -257,6 +263,7 @@ export type ModelPlayersInfoFilterInput = {
   playersVotes?: ModelStringInput | null,
   werewolfVotes?: ModelStringInput | null,
   defenceTargets?: ModelStringInput | null,
+  players?: ModelStringInput | null,
   and?: Array< ModelPlayersInfoFilterInput | null > | null,
   or?: Array< ModelPlayersInfoFilterInput | null > | null,
   not?: ModelPlayersInfoFilterInput | null,
@@ -265,6 +272,7 @@ export type ModelPlayersInfoFilterInput = {
 export type ModelPlayerFilterInput = {
   id?: ModelIDInput | null,
   userId?: ModelStringInput | null,
+  roomId?: ModelStringInput | null,
   userName?: ModelStringInput | null,
   position?: ModelStringInput | null,
   state?: ModelStringInput | null,
@@ -400,16 +408,7 @@ export type CreatePlayersInfoMutation = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -430,16 +429,7 @@ export type UpdatePlayersInfoMutation = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -460,16 +450,7 @@ export type DeletePlayersInfoMutation = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -481,8 +462,9 @@ export type CreatePlayerMutationVariables = {
 export type CreatePlayerMutation = {
   createPlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -499,8 +481,9 @@ export type UpdatePlayerMutationVariables = {
 export type UpdatePlayerMutation = {
   updatePlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -517,8 +500,9 @@ export type DeletePlayerMutationVariables = {
 export type DeletePlayerMutation = {
   deletePlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -623,16 +607,7 @@ export type GetPlayersInfoQuery = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -656,16 +631,7 @@ export type ListPlayersInfosQuery = {
       playersVotes: Array< string | null > | null,
       werewolfVotes: Array< string | null > | null,
       defenceTargets: Array< string | null > | null,
-      players:  Array< {
-        __typename: "Player",
-        id: string,
-        userId: string | null,
-        userName: string | null,
-        position: string | null,
-        state: string | null,
-        actions: Array< string | null > | null,
-        vote: string | null,
-      } | null > | null,
+      players: Array< string | null > | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -678,8 +644,9 @@ export type GetPlayerQueryVariables = {
 export type GetPlayerQuery = {
   getPlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -699,8 +666,9 @@ export type ListPlayersQuery = {
     __typename: "ModelPlayerConnection",
     items:  Array< {
       __typename: "Player",
-      id: string,
+      id: string | null,
       userId: string | null,
+      roomId: string | null,
       userName: string | null,
       position: string | null,
       state: string | null,
@@ -801,16 +769,7 @@ export type OnCreatePlayersInfoSubscription = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -826,16 +785,7 @@ export type OnUpdatePlayersInfoSubscription = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
@@ -851,24 +801,16 @@ export type OnDeletePlayersInfoSubscription = {
     playersVotes: Array< string | null > | null,
     werewolfVotes: Array< string | null > | null,
     defenceTargets: Array< string | null > | null,
-    players:  Array< {
-      __typename: "Player",
-      id: string,
-      userId: string | null,
-      userName: string | null,
-      position: string | null,
-      state: string | null,
-      actions: Array< string | null > | null,
-      vote: string | null,
-    } | null > | null,
+    players: Array< string | null > | null,
   } | null,
 };
 
 export type OnCreatePlayerSubscription = {
   onCreatePlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -880,8 +822,9 @@ export type OnCreatePlayerSubscription = {
 export type OnUpdatePlayerSubscription = {
   onUpdatePlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,
@@ -893,8 +836,9 @@ export type OnUpdatePlayerSubscription = {
 export type OnDeletePlayerSubscription = {
   onDeletePlayer:  {
     __typename: "Player",
-    id: string,
+    id: string | null,
     userId: string | null,
+    roomId: string | null,
     userName: string | null,
     position: string | null,
     state: string | null,

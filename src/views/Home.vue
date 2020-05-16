@@ -85,7 +85,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <amplify-connect :mutation="createGameInfoMutation" @done="goWaiting">
+    <amplify-connect :mutation="createGameInfoMutation" @done="participate">
       <template slot-scope="{ loading, errors, mutate }">
         <div v-if="loading">Loading...</div>
         <div v-else-if="errors.length > 0">
@@ -200,7 +200,6 @@ export default {
         { value: 8, text: "8" },
         { value: 9, text: "9" }
       ],
-      paticipatant: false,
       roomId: "",
       type: "",
       owner: "",
@@ -305,7 +304,6 @@ export default {
     },
     participate: async function() {
       console.log("participate");
-      this.paticipatant = true;
       const checker = await this.getGameInfoOnce();
       if (checker !== null) {
         // !== の時が本来の動き
@@ -318,9 +316,10 @@ export default {
       const room = await API.graphql(
         graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );
+      // test をいれるしょり
       this.$store.dispatch("setGameInfo", room.data.getGameInfo);
       console.log(this.$store.state.gameInfo);
-      return room.data.getGameInfo.id || null;
+      return room.data.getGameInfo.id;
     },
     runGame: function() {
       //ゲーム作成済みなら作成画面を表示しない
