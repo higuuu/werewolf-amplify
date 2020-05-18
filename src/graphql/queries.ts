@@ -142,3 +142,34 @@ export const listPlayers = /* GraphQL */ `
     }
   }
 `;
+export const getPlayerByRoomId = /* GraphQL */ `
+  query GetPlayerByRoomId(
+    $roomId: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPlayerByRoomId(
+      roomId: $roomId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        roomId
+        userName
+        position
+        state
+        actions
+        vote
+      }
+      nextToken
+    }
+  }
+`;

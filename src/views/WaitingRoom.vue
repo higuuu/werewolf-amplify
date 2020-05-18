@@ -55,6 +55,21 @@ import { getPlayer } from "./../graphql/queries";
 import * as subscriptions from "./../graphql/subscriptions";
 import { createPlayer, deletePlayer } from "./../graphql/mutations";
 
+const getPlayerByRoomId = `query getPlayerByRoomId($roomId: String!) {
+  getPlayerByRoomId(roomId: $roomId) {
+    items {
+      id
+      userId
+      roomId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+}`;
+
 export default {
   name: "WaitingRoom",
   data() {
@@ -104,8 +119,9 @@ export default {
     console.log(subscription);
 
     const roomId = this.gameInfo.roomId || "test";
+    console.log("this ??");
     const result = await API.graphql(
-      graphqlOperation(getPlayer, { roomId: roomId })
+      graphqlOperation(getPlayerByRoomId, { roomId: roomId })
     );
     console.log("mounted", result);
   },

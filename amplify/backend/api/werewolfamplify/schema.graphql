@@ -31,7 +31,9 @@ type PlayersInfo @model {
   players: [String]
 }
 
-type Player @model{
+type Player @model
+@key(name: "byRoomId", fields: ["roomId", "id"], queryField: "getPlayerByRoomId")
+{
   id: ID
   userId: String
   roomId: String

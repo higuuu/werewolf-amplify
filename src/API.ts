@@ -283,6 +283,22 @@ export type ModelPlayerFilterInput = {
   not?: ModelPlayerFilterInput | null,
 };
 
+export type ModelIDKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateTodoMutationVariables = {
   input: CreateTodoInput,
   condition?: ModelTodoConditionInput | null,
@@ -663,6 +679,33 @@ export type ListPlayersQueryVariables = {
 
 export type ListPlayersQuery = {
   listPlayers:  {
+    __typename: "ModelPlayerConnection",
+    items:  Array< {
+      __typename: "Player",
+      id: string | null,
+      userId: string | null,
+      roomId: string | null,
+      userName: string | null,
+      position: string | null,
+      state: string | null,
+      actions: Array< string | null > | null,
+      vote: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetPlayerByRoomIdQueryVariables = {
+  roomId?: string | null,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPlayerFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GetPlayerByRoomIdQuery = {
+  getPlayerByRoomId:  {
     __typename: "ModelPlayerConnection",
     items:  Array< {
       __typename: "Player",
