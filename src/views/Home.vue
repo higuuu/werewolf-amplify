@@ -318,7 +318,7 @@ export default {
       );
       // test をいれるしょり
       this.$store.dispatch("setGameInfo", room.data.getGameInfo);
-      console.log(this.$store.state.gameInfo);
+      console.log("checkerrr", this.$store.state.gameInfo);
       return room.data.getGameInfo.id;
     },
     runGame: function() {

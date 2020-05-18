@@ -14,7 +14,7 @@ export default new Vuex.Store({
       groupId: ""
     },
     gameInfo: {
-      roomId: "", // roomId はトークルームに限らず検出されたものを入れる
+      id: "", // id = roomId, roomId はトークルームに限らず検出されたものを入れる
       type: "",
       owner: "",
       ownerId: "",

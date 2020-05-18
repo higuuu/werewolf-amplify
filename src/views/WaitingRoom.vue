@@ -6,6 +6,13 @@
       {{ this.$store.state.gameInfo.owner }}さんが
       <br />ゲームを作成しました。
     </h4>
+    <b-row class="mt-3">
+      <b-col cols="8" offset="2">
+        <b-form-text>
+          <p style="font-size: 28px">{{ actualSumPeople }}/{{ needSumPeople }}</p>
+        </b-form-text>
+      </b-col>
+    </b-row>
     <b-container fluid class="mt-4">
       <b-row v-show="!isOwner">
         <b-col cols="8" offset="2">
@@ -72,27 +79,26 @@ export default {
     this.isOwner = this.loginData.userId === this.gameInfo.ownerId;
     if (this.isOwner) {
       this.participateName = this.$store.state.gameInfo.owner || "test";
+      // this.players.push(this.participateName);
       this.participate();
     }
     // アカウント作成APIを用意する
   },
   async mounted() {
     // Subscribe to creation of Todo
-
     const subscription = await API.graphql(
       graphqlOperation(subscriptions.onCreatePlayer)
     ).subscribe({
       next: data => {
         console.log("online", data.value.data.onCreatePlayer.roomId);
-        console.log(this.$store.state.gameInfo.roomId);
+        console.log(this.$store.state.gameInfo.id);
         if (
-          data.value.data.onCreatePlayer.roomId ==
-          this.$store.state.gameInfo.roomId
+          data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
         ) {
           this.players.push(data.value.data.onCreatePlayer);
         }
         console.log("tessst", data.value.data.onCreatePlayer);
-        console.log(this.players);
+        console.log("player", this.players);
       }
     });
     console.log(subscription);
@@ -102,6 +108,20 @@ export default {
       graphqlOperation(getPlayer, { roomId: roomId })
     );
     console.log("mounted", result);
+  },
+  computed: {
+    actualSumPeople() {
+      const actualSumPeople = this.players.length;
+      return actualSumPeople;
+    },
+    needSumPeople() {
+      const sum =
+        this.gameInfo.werewolf +
+        this.gameInfo.villager +
+        this.gameInfo.diviner +
+        this.gameInfo.brave;
+      return sum;
+    }
   },
   methods: {
     participate: async function() {
