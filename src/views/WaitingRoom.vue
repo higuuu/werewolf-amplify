@@ -100,7 +100,7 @@ export default {
     // アカウント作成APIを用意する
   },
   async mounted() {
-    // Subscribe onCreate されるたびに取得する
+    // Subscribe onCreate されるたびに取得する 後から追加用
     const subscription = await API.graphql(
       graphqlOperation(subscriptions.onCreatePlayer)
     ).subscribe({
@@ -111,12 +111,33 @@ export default {
           data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
         ) {
           this.players.push(data.value.data.onCreatePlayer);
+          const poolPlayers = this.players;
+          this.players = Array.from(
+            new Map(poolPlayers.map(player => [player.id, player]))
+          );
         }
         console.log("tessst", data.value.data.onCreatePlayer);
         console.log("player", this.players);
       }
     });
-    
+    // Delete
+    // await API.graphql(graphqlOperation(subscriptions.onDeletePlayer)).subscribe(
+    //   {
+    //     next: data => {
+    //       console.log("!!!!", data);
+    //       if (
+    //         data.value.data.onDeletePlayer.roomId ===
+    //         this.$store.state.gameInfo.id
+    //       ) {
+    //         const poolPlayers = data.value.data.onDeletePlayer;
+    //         console.log("2222", data.value.data.onDeletePlayer.id);
+    //         this.players = poolPlayers.filter(
+    //           player => player.id !== data.value.data.onDeletePlayer.id
+    //         );
+    //       }
+    //     }
+    //   }
+    // );
     // 初回にすべて取得しておく
     const roomId = this.gameInfo.roomId || "test";
     console.log("this ??");
@@ -124,8 +145,8 @@ export default {
       graphqlOperation(getPlayerByRoomId, { roomId: roomId })
     );
     console.log("mounted", result);
-    this.players = result.data.getPlayerByRoomId.items
-    console.log(this.players)
+    this.players = result.data.getPlayerByRoomId.items;
+    console.log(this.players);
   },
   computed: {
     actualSumPeople() {
