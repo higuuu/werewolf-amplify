@@ -100,7 +100,7 @@ export default {
     // アカウント作成APIを用意する
   },
   async mounted() {
-    // Subscribe to creation of Todo
+    // Subscribe onCreate されるたびに取得する
     const subscription = await API.graphql(
       graphqlOperation(subscriptions.onCreatePlayer)
     ).subscribe({
@@ -116,14 +116,16 @@ export default {
         console.log("player", this.players);
       }
     });
-    console.log(subscription);
-
+    
+    // 初回にすべて取得しておく
     const roomId = this.gameInfo.roomId || "test";
     console.log("this ??");
     const result = await API.graphql(
       graphqlOperation(getPlayerByRoomId, { roomId: roomId })
     );
     console.log("mounted", result);
+    this.players = result.data.getPlayerByRoomId.items
+    console.log(this.players)
   },
   computed: {
     actualSumPeople() {
