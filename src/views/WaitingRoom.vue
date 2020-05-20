@@ -40,9 +40,8 @@
         <b-col cols="8" offset="2">
           <h5>参加者一覧</h5>
           <ul>
-            <li v-for="item in players" :key="item">{{ item }}さん</li>
+            <li v-for="(item, index) in players" :key="index">{{ item.userName }}さん</li>
           </ul>
-          <div>{{ player.userName }}</div>
         </b-col>
       </b-row>
     </b-container>
@@ -105,16 +104,15 @@ export default {
       graphqlOperation(subscriptions.onCreatePlayer)
     ).subscribe({
       next: data => {
-        console.log("online", data.value.data.onCreatePlayer.roomId);
-        console.log(this.$store.state.gameInfo.id);
         if (
           data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
         ) {
           this.players.push(data.value.data.onCreatePlayer);
           const poolPlayers = this.players;
-          this.players = Array.from(
+          const playersMapist = Array.from(
             new Map(poolPlayers.map(player => [player.id, player]))
           );
+          this.players = playersMapist.map(player => player[1]);
         }
         console.log("tessst", data.value.data.onCreatePlayer);
         console.log("player", this.players);
@@ -188,7 +186,6 @@ export default {
             input: this.player
           })
         );
-        console.log("res", result);
       } catch {
         // 二回目以降の作成 消して再作成
         await this.leave();
@@ -197,11 +194,9 @@ export default {
             input: this.player
           })
         );
-        console.log("res", result);
       }
 
       this.$store.dispatch("setPlayer", this.player);
-      console.log(this.$store.state.player.userName);
     },
     leave: async function() {
       this.participateName = "";
@@ -212,7 +207,6 @@ export default {
           input: { id: this.roomUserId }
         })
       );
-      console.log("res", result);
       return;
     }
   }
