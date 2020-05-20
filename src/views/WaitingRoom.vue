@@ -167,8 +167,8 @@ export default {
           id: this.roomUserId
         })
       )
-      console.log(result)
-      console.log("catch")
+      console.log(result);
+      console.log("catch");
       // データなかったらつくる
       if (result.data.getPlayer === null) {
         await API.graphql(
@@ -192,7 +192,7 @@ export default {
       return;
     },
     goGame: function() {
-      console.log("go next");
+      this.$router.push("/daytimegame");
     }
   }
 };
