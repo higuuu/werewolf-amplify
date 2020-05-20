@@ -248,7 +248,6 @@ export default {
   },
   methods: {
     initializeLiff: function() {
-      console.log(process.env.development);
       liff.init(
         {
           liffId: process.env.VUE_APP_LIFF_ID
@@ -265,7 +264,6 @@ export default {
               roomId: "test",
               groupId: "test"
             });
-            console.log(this.$store.state.loginData);
           }
           await this.checkRoomid();
           const checker = await this.getGameInfoOnce();
@@ -277,8 +275,6 @@ export default {
       );
     },
     checkRoomid: function() {
-      console.log("kkkk");
-      console.log(this.$store.state.loginData.userId);
       if (this.$store.state.loginData.userId === "test") {
         // ブラウザからログインしたときに代わりに入れてあげる
         this.type = "test";

@@ -1,12 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/makeroom">MakeRoom</router-link>
-    </div>
+    <b-container>
+      <b-row class="mt-3 mb-5">
+        <b-col cols="6" />
+        <b-col cols="6">
+          <b-button size="sm" @click="finishGame">ゲームを終了</b-button>
+        </b-col>
+      </b-row>
+    </b-container>
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+import router from "./router";
+
+export default class App extends Vue {
+  finishGame() {
+    router.push("/");
+  }
+}
+
+</script>
 
 <style lang="scss">
 #app {

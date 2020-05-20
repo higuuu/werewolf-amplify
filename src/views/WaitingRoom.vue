@@ -44,6 +44,7 @@
           </ul>
         </b-col>
       </b-row>
+      <b-button variant="outline-success" @click="goGame">ゲーム開始</b-button>
     </b-container>
   </div>
 </template>
@@ -209,6 +210,9 @@ export default {
         })
       );
       return;
+    },
+    goGame: function() {
+      console.log("go next");
     }
   }
 };
