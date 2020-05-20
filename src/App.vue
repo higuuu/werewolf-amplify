@@ -15,13 +15,21 @@
 <script lang="ts">
 import Vue from 'vue'
 import router from "./router";
+import store from "./store";
+import { API, graphqlOperation } from "aws-amplify";
+import { deleteGameInfo, deletePlayer } from "./graphql/mutations";
 
 export default class App extends Vue {
-  finishGame() {
+  async finishGame() {
+    console.log(store.state)
+    // await API.graphql(
+    //   graphqlOperation(deleteGameInfo, {
+    //     id: "test"
+    //   })
+    // );
     router.push("/");
   }
 }
-
 </script>
 
 <style lang="scss">

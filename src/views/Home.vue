@@ -215,7 +215,6 @@ export default {
   },
   created() {
     this.initializeLiff();
-    this.participate();
   },
   computed: {
     sumPeople() {
@@ -269,7 +268,7 @@ export default {
           const checker = await this.getGameInfoOnce();
           if (checker !== null) {
             // !== の時が本来の動き
-            this.$router.push("/waitingroom");
+            this.participate();
           }
         }
       );
@@ -309,6 +308,7 @@ export default {
       }
     },
     getGameInfoOnce: async function() {
+      console.log("getGamaInfo Once", this.roomId);
       const room = await API.graphql(
         graphqlOperation(getGameInfoQuery, { id: this.roomId })
       );

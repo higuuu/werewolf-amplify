@@ -95,8 +95,8 @@ export default {
     if (this.isOwner) {
       this.participateName = this.$store.state.gameInfo.owner || "test";
       // this.players.push(this.participateName);
-      this.participate();
     }
+    this.participate();
     // アカウント作成APIを用意する
   },
   async mounted() {
@@ -143,7 +143,6 @@ export default {
     const result = await API.graphql(
       graphqlOperation(getPlayerByRoomId, { roomId: roomId })
     );
-    console.log("mounted", result);
     this.players = result.data.getPlayerByRoomId.items;
     console.log(this.players);
   },
@@ -163,7 +162,8 @@ export default {
   },
   methods: {
     participate: async function() {
-      const participateName = this.participateName;
+      console.log("paaaaaaaa")
+      const participateName = this.participateName || "test";
       const roomId = this.gameInfo.roomId || "test";
       const position = this.position || "test";
       const state = this.gameInfo.state || "test";
@@ -180,16 +180,13 @@ export default {
         actions: actions,
         vote: vote
       };
+      // とりまデータ取得してみる
       try {
-        // とりまデータ取得してみる
-        this.participateName = "";
-        const roomId = this.gameInfo.roomId || "test";
-        this.roomUserId = roomId + "-" + this.loginData.userId;
-        await API.graphql(
+        const result = await API.graphql(
           graphqlOperation(getPlayer, {
-            input: { id: this.roomUserId }
+            id: this.roomUserId
           })
-        );
+        )
       } catch {
         // データなかったらつくる
         await API.graphql(
@@ -199,6 +196,7 @@ export default {
         );
       }
       this.$store.dispatch("setPlayer", this.player);
+      return;
     },
     leave: async function() {
       this.participateName = "";
