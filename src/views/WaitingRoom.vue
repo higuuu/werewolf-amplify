@@ -101,25 +101,25 @@ export default {
   },
   async mounted() {
     // Subscribe onCreate されるたびに取得する 後から追加用
-    const subscription = await API.graphql(
-      graphqlOperation(subscriptions.onCreatePlayer)
-    ).subscribe({
-      next: data => {
-        if (
-          data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
-        ) {
-          this.players.push(data.value.data.onCreatePlayer);
-          const poolPlayers = this.players;
-          const playersMapist = Array.from(
-            new Map(poolPlayers.map(player => [player.id, player]))
-          );
-          this.players = playersMapist.map(player => player[1]);
+    await API.graphql(graphqlOperation(subscriptions.onCreatePlayer)).subscribe(
+      {
+        next: data => {
+          if (
+            data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
+          ) {
+            this.players.push(data.value.data.onCreatePlayer);
+            const poolPlayers = this.players;
+            const playersMapist = Array.from(
+              new Map(poolPlayers.map(player => [player.id, player]))
+            );
+            this.players = playersMapist.map(player => player[1]);
+          }
+          console.log("tessst", data.value.data.onCreatePlayer);
+          console.log("player", this.players);
+          this.$store.state.gameInfo.players = this.players;
         }
-        console.log("tessst", data.value.data.onCreatePlayer);
-        console.log("player", this.players);
-        this.$store.state.gameInfo.players = this.players;
       }
-    });
+    );
     const roomId = this.gameInfo.roomId || "test";
     console.log("this ??");
     const result = await API.graphql(
