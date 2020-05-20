@@ -117,34 +117,16 @@ export default {
         }
         console.log("tessst", data.value.data.onCreatePlayer);
         console.log("player", this.players);
+        this.$store.state.gameInfo.players = this.players;
       }
     });
-    // Delete
-    // await API.graphql(graphqlOperation(subscriptions.onDeletePlayer)).subscribe(
-    //   {
-    //     next: data => {
-    //       console.log("!!!!", data);
-    //       if (
-    //         data.value.data.onDeletePlayer.roomId ===
-    //         this.$store.state.gameInfo.id
-    //       ) {
-    //         const poolPlayers = data.value.data.onDeletePlayer;
-    //         console.log("2222", data.value.data.onDeletePlayer.id);
-    //         this.players = poolPlayers.filter(
-    //           player => player.id !== data.value.data.onDeletePlayer.id
-    //         );
-    //       }
-    //     }
-    //   }
-    // );
-    // 初回にすべて取得しておく
     const roomId = this.gameInfo.roomId || "test";
     console.log("this ??");
     const result = await API.graphql(
       graphqlOperation(getPlayerByRoomId, { roomId: roomId })
     );
     this.players = result.data.getPlayerByRoomId.items;
-    console.log(this.players);
+    this.$store.state.gameInfo.players = this.players;
   },
   computed: {
     actualSumPeople() {
@@ -162,7 +144,6 @@ export default {
   },
   methods: {
     participate: async function() {
-      console.log("paaaaaaaa")
       const participateName = this.participateName || "test";
       const roomId = this.gameInfo.roomId || "test";
       const position = this.position || "test";
@@ -181,14 +162,15 @@ export default {
         vote: vote
       };
       // とりまデータ取得してみる
-      try {
-        const result = await API.graphql(
-          graphqlOperation(getPlayer, {
-            id: this.roomUserId
-          })
-        )
-      } catch {
-        // データなかったらつくる
+      const result = await API.graphql(
+        graphqlOperation(getPlayer, {
+          id: this.roomUserId
+        })
+      )
+      console.log(result)
+      console.log("catch")
+      // データなかったらつくる
+      if (result.data.getPlayer === null) {
         await API.graphql(
           graphqlOperation(createPlayer, {
             input: this.player

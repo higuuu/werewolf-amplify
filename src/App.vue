@@ -19,14 +19,32 @@ import store from "./store";
 import { API, graphqlOperation } from "aws-amplify";
 import { deleteGameInfo, deletePlayer } from "./graphql/mutations";
 
+interface Player {
+  id: string;
+  userId: string;
+  roomId: string;
+  userName: string;
+  position: string;
+  state: string;
+  actions: [string];
+  vote: string;
+}
+
 export default class App extends Vue {
   async finishGame() {
-    console.log(store.state)
-    // await API.graphql(
-    //   graphqlOperation(deleteGameInfo, {
-    //     id: "test"
-    //   })
-    // );
+    console.log(store.state);
+    store.state.gameInfo.players.forEach((element: Player) => {
+      API.graphql(
+        graphqlOperation(deletePlayer, {
+          input: { id: element.id }
+        })
+      );
+    });
+    await API.graphql(
+      graphqlOperation(deleteGameInfo, {
+        input: { id: store.state.gameInfo.id }
+      })
+    );
     router.push("/");
   }
 }
