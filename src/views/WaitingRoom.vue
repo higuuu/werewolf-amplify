@@ -180,29 +180,30 @@ export default {
         vote: vote
       };
       try {
-        // 初回作成時
-        const result = await API.graphql(
-          graphqlOperation(createPlayer, {
-            input: this.player
+        // とりまデータ取得してみる
+        this.participateName = "";
+        const roomId = this.gameInfo.roomId || "test";
+        this.roomUserId = roomId + "-" + this.loginData.userId;
+        await API.graphql(
+          graphqlOperation(getPlayer, {
+            input: { id: this.roomUserId }
           })
         );
       } catch {
-        // 二回目以降の作成 消して再作成
-        await this.leave();
-        const result = await API.graphql(
+        // データなかったらつくる
+        await API.graphql(
           graphqlOperation(createPlayer, {
             input: this.player
           })
         );
       }
-
       this.$store.dispatch("setPlayer", this.player);
     },
     leave: async function() {
       this.participateName = "";
       const roomId = this.gameInfo.roomId || "test";
       this.roomUserId = roomId + "-" + this.loginData.userId;
-      const result = await API.graphql(
+      await API.graphql(
         graphqlOperation(deletePlayer, {
           input: { id: this.roomUserId }
         })
