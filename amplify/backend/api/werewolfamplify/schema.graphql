@@ -23,7 +23,7 @@ type PlayersInfo @model {
   times: Int!
   alives: [String]
   deads: [String]
-  startTime: AWSDate
+  startTime: AWSDateTime
   gameState: String
   playersVotes: [String]
   werewolfVotes: [String]

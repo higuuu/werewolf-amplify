@@ -32,6 +32,12 @@ interface Player {
 
 export default class App extends Vue {
   async finishGame() {
+    const checked = window.confirm(
+      "進行中の場合ゲームの内容も消えてしまいますが、よろしいですか？"
+    );
+    if (!checked) {
+      return;
+    }
     console.log(store.state);
     store.state.gameInfo.players.forEach((element: Player) => {
       API.graphql(

@@ -33,7 +33,19 @@ export default new Vuex.Store({
       state: "",
       actions: [""],
       vote: ""
-    }
+    },
+    playersInfo: {
+      roomId: "",
+      times: 0,
+      alives: [],
+      deads: [],
+      startTime: null,
+      gameState: "",
+      playersVotes: [],
+      werewolfVotes: [],
+      defenceTargets: [],
+      players: []
+    },
   },
   mutations: {
     setLoginData(state, info) {
@@ -44,6 +56,9 @@ export default new Vuex.Store({
     },
     setPlayer(state, info) {
       state.player = info
+    },
+    setPlayersInfo(state, info) {
+      state.playersInfo = info
     }
   },
   actions: {
@@ -55,6 +70,9 @@ export default new Vuex.Store({
     },
     setPlayer(context, info) {
       context.commit('setPlayer', info)
+    },
+    setPlayersInfo(context, info) {
+      context.commit('setPlayersInfo', info)
     }
   },
   getters: {

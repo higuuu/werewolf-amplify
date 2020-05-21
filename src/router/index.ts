@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path: "/daytimegame",
+    path: "/daytime",
     name: "DaytimeGame",
     component: () =>
       import("../views/DaytimeGame.vue")
