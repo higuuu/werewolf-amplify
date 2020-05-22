@@ -71,7 +71,7 @@ export const listGameInfos = /* GraphQL */ `
 export const getPlayersInfo = /* GraphQL */ `
   query GetPlayersInfo($id: ID!) {
     getPlayersInfo(id: $id) {
-      roomId
+      id
       times
       alives
       deads
@@ -92,7 +92,7 @@ export const listPlayersInfos = /* GraphQL */ `
   ) {
     listPlayersInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        roomId
+        id
         times
         alives
         deads

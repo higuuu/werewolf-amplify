@@ -83,7 +83,7 @@ export const onDeleteGameInfo = /* GraphQL */ `
 export const onCreatePlayersInfo = /* GraphQL */ `
   subscription OnCreatePlayersInfo {
     onCreatePlayersInfo {
-      roomId
+      id
       times
       alives
       deads
@@ -99,7 +99,7 @@ export const onCreatePlayersInfo = /* GraphQL */ `
 export const onUpdatePlayersInfo = /* GraphQL */ `
   subscription OnUpdatePlayersInfo {
     onUpdatePlayersInfo {
-      roomId
+      id
       times
       alives
       deads
@@ -115,7 +115,7 @@ export const onUpdatePlayersInfo = /* GraphQL */ `
 export const onDeletePlayersInfo = /* GraphQL */ `
   subscription OnDeletePlayersInfo {
     onDeletePlayersInfo {
-      roomId
+      id
       times
       alives
       deads

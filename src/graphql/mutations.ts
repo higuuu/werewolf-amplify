@@ -104,7 +104,7 @@ export const createPlayersInfo = /* GraphQL */ `
     $condition: ModelPlayersInfoConditionInput
   ) {
     createPlayersInfo(input: $input, condition: $condition) {
-      roomId
+      id
       times
       alives
       deads
@@ -123,7 +123,7 @@ export const updatePlayersInfo = /* GraphQL */ `
     $condition: ModelPlayersInfoConditionInput
   ) {
     updatePlayersInfo(input: $input, condition: $condition) {
-      roomId
+      id
       times
       alives
       deads
@@ -142,7 +142,7 @@ export const deletePlayersInfo = /* GraphQL */ `
     $condition: ModelPlayersInfoConditionInput
   ) {
     deletePlayersInfo(input: $input, condition: $condition) {
-      roomId
+      id
       times
       alives
       deads

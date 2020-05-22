@@ -19,11 +19,11 @@ type GameInfo @model {
 }
 
 type PlayersInfo @model {
-  roomId: ID!
+  id: ID!
   times: Int!
   alives: [String]
   deads: [String]
-  startTime: AWSDateTime
+  startTime: String
   gameState: String
   playersVotes: [String]
   werewolfVotes: [String]

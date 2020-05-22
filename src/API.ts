@@ -127,7 +127,7 @@ export type DeleteGameInfoInput = {
 };
 
 export type CreatePlayersInfoInput = {
-  roomId: string,
+  id?: string | null,
   times: number,
   alives?: Array< string | null > | null,
   deads?: Array< string | null > | null,
@@ -140,7 +140,6 @@ export type CreatePlayersInfoInput = {
 };
 
 export type ModelPlayersInfoConditionInput = {
-  roomId?: ModelIDInput | null,
   times?: ModelIntInput | null,
   alives?: ModelStringInput | null,
   deads?: ModelStringInput | null,
@@ -155,24 +154,8 @@ export type ModelPlayersInfoConditionInput = {
   not?: ModelPlayersInfoConditionInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type UpdatePlayersInfoInput = {
-  roomId?: string | null,
+  id: string,
   times?: number | null,
   alives?: Array< string | null > | null,
   deads?: Array< string | null > | null,
@@ -236,6 +219,22 @@ export type ModelTodoFilterInput = {
   not?: ModelTodoFilterInput | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type ModelGameInfoFilterInput = {
   id?: ModelIDInput | null,
   type?: ModelStringInput | null,
@@ -254,7 +253,7 @@ export type ModelGameInfoFilterInput = {
 };
 
 export type ModelPlayersInfoFilterInput = {
-  roomId?: ModelIDInput | null,
+  id?: ModelIDInput | null,
   times?: ModelIntInput | null,
   alives?: ModelStringInput | null,
   deads?: ModelStringInput | null,
@@ -415,7 +414,7 @@ export type CreatePlayersInfoMutationVariables = {
 export type CreatePlayersInfoMutation = {
   createPlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -436,7 +435,7 @@ export type UpdatePlayersInfoMutationVariables = {
 export type UpdatePlayersInfoMutation = {
   updatePlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -457,7 +456,7 @@ export type DeletePlayersInfoMutationVariables = {
 export type DeletePlayersInfoMutation = {
   deletePlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -614,7 +613,7 @@ export type GetPlayersInfoQueryVariables = {
 export type GetPlayersInfoQuery = {
   getPlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -638,7 +637,7 @@ export type ListPlayersInfosQuery = {
     __typename: "ModelPlayersInfoConnection",
     items:  Array< {
       __typename: "PlayersInfo",
-      roomId: string,
+      id: string,
       times: number,
       alives: Array< string | null > | null,
       deads: Array< string | null > | null,
@@ -803,7 +802,7 @@ export type OnDeleteGameInfoSubscription = {
 export type OnCreatePlayersInfoSubscription = {
   onCreatePlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -819,7 +818,7 @@ export type OnCreatePlayersInfoSubscription = {
 export type OnUpdatePlayersInfoSubscription = {
   onUpdatePlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,
@@ -835,7 +834,7 @@ export type OnUpdatePlayersInfoSubscription = {
 export type OnDeletePlayersInfoSubscription = {
   onDeletePlayersInfo:  {
     __typename: "PlayersInfo",
-    roomId: string,
+    id: string,
     times: number,
     alives: Array< string | null > | null,
     deads: Array< string | null > | null,

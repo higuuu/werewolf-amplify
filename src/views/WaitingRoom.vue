@@ -3,14 +3,13 @@
     <!-- <h4>あなたは{{ this.isOwner ? "主催者" : "参加者" }}です。</h4> -->
     <h4 v-show="this.isOwner">あなたは主催者です。</h4>
     <h4 v-show="!this.isOwner">
-      {{ this.$store.state.gameInfo.owner }}さんが <br />ゲームを作成しました。
+      {{ this.$store.state.gameInfo.owner }}さんが
+      <br />ゲームを作成しました。
     </h4>
     <b-row class="mt-3">
       <b-col cols="8" offset="2">
         <b-form-text>
-          <p style="font-size: 28px">
-            {{ actualSumPeople }}/{{ needSumPeople }}
-          </p>
+          <p style="font-size: 28px">{{ actualSumPeople }}/{{ needSumPeople }}</p>
         </b-form-text>
       </b-col>
     </b-row>
@@ -23,27 +22,16 @@
             label-for="input-formatter"
             description="他の人と名前が被らないように入力してください"
           >
-            <b-form-input
-              v-model="participateName"
-              placeholder="name"
-            ></b-form-input>
+            <b-form-input v-model="participateName" placeholder="name"></b-form-input>
           </b-form-group>
           <b-button-group class="mt-2 mr-2 ml-2" v-show="!this.isOwner">
             <b-button variant="success" @click="participate">
-              <b-icon
-                icon="person-check-fill"
-                class="mr-2"
-                aria-hidden="true"
-              />参加する
+              <b-icon icon="person-check-fill" class="mr-2" aria-hidden="true" />参加する
             </b-button>
           </b-button-group>
           <b-button-group class="mt-2 mr-2 ml-2" v-show="!this.isOwner">
             <b-button variant="danger" @click="leave">
-              <b-icon
-                icon="box-arrow-left"
-                class="mr-2"
-                aria-hidden="true"
-              />退場する
+              <b-icon icon="box-arrow-left" class="mr-2" aria-hidden="true" />退場する
             </b-button>
           </b-button-group>
         </b-col>
@@ -122,7 +110,8 @@ export default {
       {
         next: data => {
           if (
-            data.value.data.onCreatePlayer.roomId == this.$store.state.gameInfo.id
+            data.value.data.onCreatePlayer.roomId ==
+            this.$store.state.gameInfo.id
           ) {
             this.players.push(data.value.data.onCreatePlayer);
             const poolPlayers = this.players;
@@ -205,6 +194,7 @@ export default {
           id: roomId
         })
       );
+      console.log(playersInfo);
       if (playersInfo.data.getPlayersInfo !== null) {
         this.$store.dispatch("setPlayersInfo", playersInfo);
         // 既にゲームがある場合はもう次の画面
@@ -254,18 +244,19 @@ export default {
           })
         );
       });
+      const roomId = this.gameInfo.roomId || "test";
       const playersInfo = {
-        roomId: this.roomUserId,
+        id: roomId,
         times: 0,
         alives: [],
         deads: [],
-        startTime: new Date(),
+        startTime: new Date().getTime(),
         gameState: "daytime",
         playersVotes: [],
         werewolfVotes: [],
         defenceTargets: [],
         players: []
-      }
+      };
       await API.graphql(
         graphqlOperation(createPlayersInfo, {
           input: playersInfo
