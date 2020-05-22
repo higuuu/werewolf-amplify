@@ -17,7 +17,11 @@ import Vue from 'vue'
 import router from "./router";
 import store from "./store";
 import { API, graphqlOperation } from "aws-amplify";
-import { deleteGameInfo, deletePlayer } from "./graphql/mutations";
+import {
+  deleteGameInfo,
+  deletePlayer,
+  deletePlayersInfo
+} from "./graphql/mutations";
 
 interface Player {
   id: string;
@@ -48,6 +52,11 @@ export default class App extends Vue {
     });
     await API.graphql(
       graphqlOperation(deleteGameInfo, {
+        input: { id: store.state.gameInfo.id }
+      })
+    );
+    await API.graphql(
+      graphqlOperation(deletePlayersInfo, {
         input: { id: store.state.gameInfo.id }
       })
     );
