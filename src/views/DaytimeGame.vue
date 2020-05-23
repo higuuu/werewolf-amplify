@@ -124,13 +124,13 @@ export default {
       }
     },
     checkState() {
-      // state が night の場合パスを変える、あとからログイン用
+      // times%2=1 の場合パスを変える、あとからログイン用
       if (this.player.state === "night") {
         // nigth action のページ
       }
     },
     checkVote() {
-      // update を監視して投票数が定員通りになったのならstateを変更しパスを渡す
+      // update を監視して投票数が定員通りになったのならtimesを変更しパスを渡す
       // nigth action のページ
     },
     checkGame() {

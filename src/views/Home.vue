@@ -281,14 +281,14 @@ export default {
         this.ownerId = "test";
         this.roomId = "test";
         this.players.push(this.ownerId);
-        this.state = "waitng";
+        this.state = "alive";
         return;
       } else {
         this.type = this.$store.state.loginData.type;
         this.owner = this.$store.state.loginData.owner;
         this.ownerId = this.$store.state.loginData.userId;
         this.players.push(this.ownerId);
-        this.state = "waitng";
+        this.state = "alive";
       }
       if (this.type === "group") {
         this.roomId = this.$store.state.loginData.groupId;
