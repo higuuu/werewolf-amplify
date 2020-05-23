@@ -1,6 +1,6 @@
 <template>
   <div class="daytimenoon">
-    <h5>投票者を入力してください</h5>
+    <h5>投票先を選択してください</h5>
     <b-container fluid class="mb-2">
       <b-row>
         <b-col cols="10" offset="1">
@@ -24,7 +24,7 @@
       <b-button variant="success" @click="startVote()">投票</b-button>
     </b-button-group>
     <b-container fluid>
-      <b-row class="mt-3">
+      <b-row class="mt-2">
         <b-col cols="10" offset="1">
           <DaytimeGameList :players="players" />
         </b-col>
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      player: this.$store.state.player,
       players: this.$store.state.gameInfo.players,
       gameInfo: this.$store.state.gameInfo,
       nameList: "",
@@ -64,6 +65,7 @@ export default {
   },
   created() {
     this.nameList = this.players.map(player => player.userName);
+    this.checkDisplayPosition();
     this.countDown();
   },
   methods: {
@@ -95,6 +97,37 @@ export default {
       console.log(result);
       this.startTime = result.data.getPlayersInfo.startTime;
       console.log(this.startTime);
+    },
+    checkDisplayPosition: function() {
+      // players.displayPosition に全部に不明と記入する
+      let index = 0;
+      this.players.forEach(() => {
+        console.log(this.player);
+        console.log(index);
+        if (this.player.positioin === "werewolf") {
+          this.players[index].displayPosition = this.player.positioin;
+        } else {
+          this.players[index].displayPosition = "不明";
+        }
+        if (this.player.positioin === "diviner") {
+          this.player.actions.forEach(playerId => {
+            console.log(playerId);
+            if (playerId === this.players[index].userId) {
+              this.players[index].displayPosition = this.players[
+                index
+              ].positioin;
+            }
+          });
+        }
+        index++;
+      });
+      console.log(this.players);
+      // players.times / 2 の数だけ占い師は表示できる
+      if (this.player.positioin === "diviner") {
+        this.player.actions.forEach(playerId => {
+          console.log(playerId);
+        });
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="daytimegamelist">
-    <b-table fixed striped hover :items="players" :fields="fields"> </b-table>
+    <b-table fixed striped hover :items="players" :fields="fields"></b-table>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default class DaytimeGameList extends Vue {
       label: "状態"
     },
     {
-      key: "position",
+      key: "displayPosition",
       label: "役職"
     }
   ];

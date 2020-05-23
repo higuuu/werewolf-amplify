@@ -133,6 +133,15 @@ export default {
     );
     this.players = result.data.getPlayerByRoomId.items;
     this.$store.state.gameInfo.players = this.players;
+    await API.graphql(
+      graphqlOperation(subscriptions.onCreatePlayersInfo)
+    ).subscribe({
+      next: data => {
+        console.log(data);
+        this.$store.dispatch("setPlayersInfo", data.onCreatePlayersInfo);
+        this.$router.push("/daytime");
+      }
+    });
   },
   computed: {
     actualSumPeople() {
@@ -262,7 +271,6 @@ export default {
           input: playersInfo
         })
       );
-      this.$router.push("/daytime");
     }
   }
 };
