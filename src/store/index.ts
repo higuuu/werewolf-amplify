@@ -35,7 +35,7 @@ export default new Vuex.Store({
       vote: ""
     },
     playersInfo: {
-      roomId: "",
+      id: "", //room
       times: 0,
       alives: [],
       deads: [],

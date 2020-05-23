@@ -122,6 +122,20 @@ export default {
           console.log(playerId);
         });
       }
+    },
+    checkState() {
+      // state が night の場合パスを変える、あとからログイン用
+      if (this.player.state === "night") {
+        // nigth action のページ
+      }
+    },
+    checkVote() {
+      // update を監視して投票数が定員通りになったのならstateを変更しパスを渡す
+      // nigth action のページ
+    },
+    checkGame() {
+      // 人狼過半数 or 0 になったらゲームを終了させる
+      // 結果表示 のページ
     }
   }
 };
