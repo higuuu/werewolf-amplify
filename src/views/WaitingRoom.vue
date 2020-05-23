@@ -120,8 +120,6 @@ export default {
             );
             this.players = playersMapist.map(player => player[1]);
           }
-          console.log("tessst", data.value.data.onCreatePlayer);
-          console.log("player", this.players);
           this.$store.state.gameInfo.players = this.players;
         }
       }
@@ -234,6 +232,10 @@ export default {
       }
       for (let k = 0; k < this.gameInfo.brave; k++) {
         this.positions.push("brave");
+      }
+      if (this.players.length !== this.positions.length) {
+        alert("参加者の数が一致していません");
+        return;
       }
       const shuffle = ([...array]) => {
         for (let i = array.length - 1; i >= 0; i--) {

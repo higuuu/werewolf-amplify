@@ -78,7 +78,6 @@ export default {
       }
     },
     startVote: async function() {
-      console.log(this.vote);
       this.$store.state.player.vote = this.vote;
       const result = await API.graphql(
         graphqlOperation(updatePlayer, { input: this.$store.state.player })
@@ -86,7 +85,6 @@ export default {
       if (result.data.updatePlayer.vote !== "") {
         this.isDoneVote = true;
       }
-      console.log(result);
     },
     countDown: async function() {
       const result = await API.graphql(
@@ -94,16 +92,12 @@ export default {
           id: this.gameInfo.id
         })
       );
-      console.log(result);
       this.startTime = result.data.getPlayersInfo.startTime;
-      console.log(this.startTime);
     },
     checkDisplayPosition: function() {
       // players.displayPosition に全部に不明と記入する
       let index = 0;
       this.players.forEach(() => {
-        console.log(this.player);
-        console.log(index);
         if (this.player.positioin === "werewolf") {
           this.players[index].displayPosition = this.player.positioin;
         } else {
