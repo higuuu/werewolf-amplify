@@ -170,17 +170,17 @@ export default {
       // nigth action のページ
     },
     judge: function(voteResults) {
-      if (this.playersInfo.alives.length === voteResults.length) {
-        const accumurate = [];
-        this.playersInfo.alives.forEach(vote => {
-          accumurate[voteResults[vote]] =
-            accumurate[voteResults[vote]] === undefined
-              ? 1
-              : accumurate[voteResults[vote]] + 1;
-        });
-      } else {
+      if (this.playersInfo.alives.length !== voteResults.length) {
         console.log("未投票");
+        return;
       }
+      const accumurate = [];
+      this.playersInfo.alives.forEach(vote => {
+        accumurate[voteResults[vote]] =
+          accumurate[voteResults[vote]] === undefined
+            ? 1
+            : accumurate[voteResults[vote]] + 1;
+      });
     },
     checkGame: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
