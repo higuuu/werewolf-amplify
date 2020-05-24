@@ -31,7 +31,8 @@ type PlayersInfo @model {
   players: [String]
 }
 
-type Player @model
+type Player 
+@model(subscriptions:{ onUpdate: ["onUpdatePlayer","onUpdatePlayerByRoomId(roomId:String!)"]})
 @key(name: "byRoomId", fields: ["roomId", "id"], queryField: "getPlayerByRoomId")
 {
   id: ID

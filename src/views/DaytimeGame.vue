@@ -38,6 +38,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import DaytimeGameList from "@/components/DaytimeGameList.vue";
 import { updatePlayer } from "./../graphql/mutations";
 import { getPlayersInfo } from "./../graphql/queries";
+import { onUpdatePlayerByRoomId } from "./../graphql/subscriptions";
 
 export default {
   name: "daytime",
@@ -58,15 +59,16 @@ export default {
     };
   },
   computed: {},
-  mounted() {
-    setInterval(() => {
-      this.calWaitingTime();
-    }, 1000);
-  },
   created() {
     this.nameList = this.players.map(player => player.userName);
     this.checkDisplayPosition();
     this.countDown();
+  },
+  mounted() {
+    setInterval(() => {
+      this.calWaitingTime();
+    }, 1000);
+    this.checkVote();
   },
   methods: {
     calWaitingTime: function() {
@@ -123,17 +125,31 @@ export default {
         });
       }
     },
-    checkState() {
+    checkState: function() {
       // times%2=1 の場合パスを変える、あとからログイン用
       if (this.player.state === "night") {
         // nigth action のページ
       }
     },
-    checkVote() {
+    checkVote: async function() {
       // update を監視して投票数が定員通りになったのならtimesを変更しパスを渡す
+      const voteResults = [];
+      await API.graphql(
+        graphqlOperation(
+          onUpdatePlayerByRoomId,
+          {
+            roomId: this.gameInfo.roomId
+          }.subscribe({
+            next: data => {
+              voteResults.push(data.onUpdatePlayer.vote);
+              console.log(voteResults);
+            }
+          })
+        )
+      );
       // nigth action のページ
     },
-    checkGame() {
+    checkGame: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
       // 結果表示 のページ
     }
