@@ -147,10 +147,11 @@ export default {
       console.log(initVoteResults);
       initVoteResults.data.getPlayerByRoomId.items.forEach(item => {
         if (item.vote !== "" && item.vote !== "test") {
-          const voteId = item.id;
+          const voteId = item.userId;
           voteResults[voteId] = item.vote;
         }
       });
+      this.judge(voteResults);
       console.log(voteResults);
       console.log("aaa", this.playersInfo);
       await API.graphql(
@@ -160,12 +161,26 @@ export default {
       ).subscribe({
         next: res => {
           // voteResults.push(res.value.data.onUpdatePlayerByRoomId.vote);
-          const voteId = res.value.data.onUpdatePlayerByRoomId.id;
+          const voteId = res.value.data.onUpdatePlayerByRoomId.userId;
           voteResults[voteId] = res.value.data.onUpdatePlayerByRoomId.vote;
           console.log(voteResults);
+          this.judge(voteResults);
         }
       });
       // nigth action のページ
+    },
+    judge: function(voteResults) {
+      if (this.playersInfo.alives.length === voteResults.length) {
+        const accumurate = [];
+        this.playersInfo.alives.forEach(vote => {
+          accumurate[voteResults[vote]] =
+            accumurate[voteResults[vote]] === undefined
+              ? 1
+              : accumurate[voteResults[vote]] + 1;
+        });
+      } else {
+        console.log("未投票");
+      }
     },
     checkGame: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
