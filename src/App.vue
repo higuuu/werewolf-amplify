@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 import router from "./router";
 import store from "./store";
 import { API, graphqlOperation } from "aws-amplify";
