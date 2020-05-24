@@ -163,7 +163,7 @@ export default {
       const participateName = this.participateName || "test";
       const roomId = this.gameInfo.roomId || "test";
       const position = this.position || "test";
-      const state = this.gameInfo.state || "test";
+      const state = "alive";
       const actions = this.actions || ["test"];
       const vote = this.vote || "test";
       this.roomUserId = roomId + "-" + this.loginData.userId;
@@ -192,6 +192,7 @@ export default {
             input: this.player
           })
         );
+        this.players.push(this.player);
         this.$store.dispatch("setPlayer", this.player);
         return;
       } else {

@@ -167,7 +167,6 @@ export default {
           this.judge(voteResults);
         }
       });
-      // nigth action のページ
     },
     judge: function(voteResults) {
       if (this.playersInfo.alives.length !== voteResults.length) {
@@ -181,8 +180,10 @@ export default {
             ? 1
             : accumurate[voteResults[vote]] + 1;
       });
+      // nigth action のページ
+      // 再投票の処理
     },
-    checkGame: function() {
+    checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
       // 結果表示 のページ
     }
