@@ -135,8 +135,11 @@ export default {
       graphqlOperation(subscriptions.onCreatePlayersInfo)
     ).subscribe({
       next: data => {
-        console.log(data);
-        this.$store.dispatch("setPlayersInfo", data.onCreatePlayersInfo);
+        console.log(data.value.data);
+        this.$store.dispatch(
+          "setPlayersInfo",
+          data.value.data.onCreatePlayersInfo
+        );
         this.$router.push("/daytime");
       }
     });
@@ -203,7 +206,7 @@ export default {
       );
       console.log(playersInfo);
       if (playersInfo.data.getPlayersInfo !== null) {
-        this.$store.dispatch("setPlayersInfo", playersInfo);
+        this.$store.dispatch("setPlayersInfo", playersInfo.data.getPlayersInfo);
         // 既にゲームがある場合はもう次の画面
         this.$router.push("/daytime");
       }
@@ -247,8 +250,10 @@ export default {
       this.positions = shuffle(this.positions);
       console.log("shuffle", this.positions);
       console.log(this.players);
+      const playersId = [];
       this.players.forEach((player, i) => {
         player.position = this.positions[i];
+        playersId.push(player.userId);
         API.graphql(
           graphqlOperation(updatePlayer, {
             input: player
@@ -259,7 +264,7 @@ export default {
       const playersInfo = {
         id: roomId,
         times: 0,
-        alives: [],
+        alives: playersId,
         deads: [],
         startTime: new Date().getTime(),
         gameState: "daytime",

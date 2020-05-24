@@ -37,7 +37,7 @@
 import { API, graphqlOperation } from "aws-amplify";
 import DaytimeGameList from "@/components/DaytimeGameList.vue";
 import { updatePlayer } from "./../graphql/mutations";
-import { getPlayersInfo } from "./../graphql/queries";
+import { getPlayersInfo, getPlayerByRoomId } from "./../graphql/queries";
 import { onUpdatePlayerByRoomId } from "./../graphql/subscriptions";
 
 export default {
@@ -49,7 +49,8 @@ export default {
     return {
       player: this.$store.state.player,
       players: this.$store.state.gameInfo.players,
-      gameInfo: this.$store.state.gameInfo,
+      playersInfo: this.$store.state.playersInfo,
+      // gameInfo: this.$store.state.gameInfo,
       nameList: "",
       vote: "",
       startTime: "",
@@ -60,7 +61,12 @@ export default {
   },
   computed: {},
   created() {
-    this.nameList = this.players.map(player => player.userName);
+    console.log(this.playersInfo);
+    this.nameList = this.players.map(player => {
+      if (this.playersInfo.alives.includes(player.userId)) {
+        return player.userName;
+      }
+    });
     this.checkDisplayPosition();
     this.countDown();
   },
@@ -91,7 +97,7 @@ export default {
     countDown: async function() {
       const result = await API.graphql(
         graphqlOperation(getPlayersInfo, {
-          id: this.gameInfo.id
+          id: this.playersInfo.id
         })
       );
       this.startTime = result.data.getPlayersInfo.startTime;
@@ -132,21 +138,33 @@ export default {
       }
     },
     checkVote: async function() {
+      console.log(this.playersInfo.id);
       // update を監視して投票数が定員通りになったのならtimesを変更しパスを渡す
       const voteResults = [];
-      await API.graphql(
-        graphqlOperation(
-          onUpdatePlayerByRoomId,
-          {
-            roomId: this.gameInfo.roomId
-          }.subscribe({
-            next: data => {
-              voteResults.push(data.onUpdatePlayer.vote);
-              console.log(voteResults);
-            }
-          })
-        )
+      const initVoteResults = await API.graphql(
+        graphqlOperation(getPlayerByRoomId, { roomId: this.playersInfo.id })
       );
+      console.log(initVoteResults);
+      initVoteResults.data.getPlayerByRoomId.items.forEach(item => {
+        if (item.vote !== "" && item.vote !== "test") {
+          const voteId = item.id;
+          voteResults[voteId] = item.vote;
+        }
+      });
+      console.log(voteResults);
+      console.log("aaa", this.playersInfo);
+      await API.graphql(
+        graphqlOperation(onUpdatePlayerByRoomId, {
+          roomId: this.playersInfo.id
+        })
+      ).subscribe({
+        next: res => {
+          // voteResults.push(res.value.data.onUpdatePlayerByRoomId.vote);
+          const voteId = res.value.data.onUpdatePlayerByRoomId.id;
+          voteResults[voteId] = res.value.data.onUpdatePlayerByRoomId.vote;
+          console.log(voteResults);
+        }
+      });
       // nigth action のページ
     },
     checkGame: function() {

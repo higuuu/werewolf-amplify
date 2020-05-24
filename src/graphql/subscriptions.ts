@@ -128,6 +128,20 @@ export const onDeletePlayersInfo = /* GraphQL */ `
     }
   }
 `;
+export const onCreatePlayer = /* GraphQL */ `
+  subscription OnCreatePlayer {
+    onCreatePlayer {
+      id
+      userId
+      roomId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
 export const onUpdatePlayer = /* GraphQL */ `
   subscription OnUpdatePlayer {
     onUpdatePlayer {
@@ -145,6 +159,20 @@ export const onUpdatePlayer = /* GraphQL */ `
 export const onUpdatePlayerByRoomId = /* GraphQL */ `
   subscription OnUpdatePlayerByRoomId($roomId: String!) {
     onUpdatePlayerByRoomId(roomId: $roomId) {
+      id
+      userId
+      roomId
+      userName
+      position
+      state
+      actions
+      vote
+    }
+  }
+`;
+export const onDeletePlayer = /* GraphQL */ `
+  subscription OnDeletePlayer {
+    onDeletePlayer {
       id
       userId
       roomId

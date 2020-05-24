@@ -847,6 +847,20 @@ export type OnDeletePlayersInfoSubscription = {
   } | null,
 };
 
+export type OnCreatePlayerSubscription = {
+  onCreatePlayer:  {
+    __typename: "Player",
+    id: string | null,
+    userId: string | null,
+    roomId: string | null,
+    userName: string | null,
+    position: string | null,
+    state: string | null,
+    actions: Array< string | null > | null,
+    vote: string | null,
+  } | null,
+};
+
 export type OnUpdatePlayerSubscription = {
   onUpdatePlayer:  {
     __typename: "Player",
@@ -867,6 +881,20 @@ export type OnUpdatePlayerByRoomIdSubscriptionVariables = {
 
 export type OnUpdatePlayerByRoomIdSubscription = {
   onUpdatePlayerByRoomId:  {
+    __typename: "Player",
+    id: string | null,
+    userId: string | null,
+    roomId: string | null,
+    userName: string | null,
+    position: string | null,
+    state: string | null,
+    actions: Array< string | null > | null,
+    vote: string | null,
+  } | null,
+};
+
+export type OnDeletePlayerSubscription = {
+  onDeletePlayer:  {
     __typename: "Player",
     id: string | null,
     userId: string | null,
