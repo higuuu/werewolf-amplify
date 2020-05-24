@@ -123,6 +123,8 @@ export default {
         }
         index++;
       });
+      // 自分の役職を表示
+      // TODO
       console.log(this.players);
       // players.times / 2 の数だけ占い師は表示できる
       if (this.player.positioin === "diviner") {
@@ -169,17 +171,24 @@ export default {
       });
     },
     judge: function(voteResults) {
-      if (this.playersInfo.alives.length !== voteResults.length) {
+      console.log(this.playersInfo.alives.length);
+      console.log(voteResults.length);
+      const votes = [];
+      this.playersInfo.alives.forEach(id => {
+        votes.push(voteResults[id]);
+      });
+      if (this.playersInfo.alives.length !== votes.length) {
         console.log("未投票");
         return;
       }
       const accumurate = [];
-      this.playersInfo.alives.forEach(vote => {
-        accumurate[voteResults[vote]] =
-          accumurate[voteResults[vote]] === undefined
+      this.playersInfo.alives.forEach(id => {
+        accumurate[voteResults[id]] =
+          accumurate[voteResults[id]] === undefined
             ? 1
-            : accumurate[voteResults[vote]] + 1;
+            : accumurate[voteResults[id]] + 1;
       });
+      console.log(accumurate);
       // nigth action のページ
       // 再投票の処理
     },
