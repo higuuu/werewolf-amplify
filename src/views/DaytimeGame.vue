@@ -189,14 +189,32 @@ export default {
         return;
       }
       const accumurate = [];
+      const userIdList = [];
+      let displayResult = "";
       this.playersInfo.alives.forEach(id => {
+        userIdList.push(voteResults[id]);
         accumurate[voteResults[id]] =
           accumurate[voteResults[id]] === undefined
             ? 1
             : accumurate[voteResults[id]] + 1;
       });
       console.log(accumurate);
+      const userIdSet = new Set(userIdList);
+      const newUserIdList = Array.from(userIdSet);
+      newUserIdList.forEach(id => {
+        const user = this.players.filter(player => {
+          return player.userId === id;
+        });
+        console.log(user);
+        displayResult +=
+          user[0].userName +
+          "さん : " +
+          accumurate[voteResults[id]] +
+          "票" +
+          "\n";
+      });
       // nigth action のページ
+      alert(`投票結果\n${displayResult}`);
       // 再投票の処理
     },
     checkGameEnd: function() {
