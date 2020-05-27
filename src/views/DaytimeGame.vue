@@ -125,6 +125,13 @@ export default {
       });
       // 自分の役職を表示
       // TODO
+      index = 0;
+      this.players.forEach(player => {
+        if (player.userId === this.player.userId) {
+          this.players[index].displayPosition = this.player.position;
+        }
+        index++;
+      });
       console.log(this.players);
       // players.times / 2 の数だけ占い師は表示できる
       if (this.player.positioin === "diviner") {
