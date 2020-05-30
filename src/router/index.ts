@@ -26,6 +26,12 @@ const routes: Array<RouteConfig> = [
       import("../views/DaytimeGame.vue")
   },
   {
+    path: "/night",
+    name: "NightGames",
+    component: () =>
+      import("../views/NightGames.vue")
+  },
+  {
     path: "/waitingroom",
     name: "WaitingRoom",
     // route level code-splitting
