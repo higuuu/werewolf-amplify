@@ -172,8 +172,9 @@ export default {
           // voteResults.push(res.value.data.onUpdatePlayerByRoomId.vote);
           const voteId = res.value.data.onUpdatePlayerByRoomId.userId;
           voteResults[voteId] = res.value.data.onUpdatePlayerByRoomId.vote;
-          console.log(voteResults);
-          this.judge(voteResults);
+          if (res.value.data.onUpdatePlayerByRoomId.vote !== "") {
+            this.judge(voteResults);
+          }
         }
       });
     },
@@ -207,9 +208,6 @@ export default {
         const user = this.players.filter(player => {
           return player.userId === id;
         });
-        console.log(newUserIdList);
-        console.log(this.players);
-        console.log("user", user[0]);
         accumurateNum.push(accumurate[id]);
         // [id] が誰に投票されたかを意味するので voteResults で該当者がでる
         accumurateNumUserId.push(voteResults[id]);
@@ -217,7 +215,6 @@ export default {
         displayResult +=
           user[0].userName + "さん : " + accumurate[id] + "票" + "\n";
       });
-      console.log("accumu", accumurate);
       alert(`投票結果\n${displayResult}`);
       // 再投票の処理
       const maxNum = Math.max.apply(null, accumurateNum);
