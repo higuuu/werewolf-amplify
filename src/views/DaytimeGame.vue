@@ -36,7 +36,7 @@
 <script>
 import { API, graphqlOperation } from "aws-amplify";
 import DaytimeGameList from "@/components/DaytimeGameList.vue";
-import { updatePlayer } from "./../graphql/mutations";
+import { updatePlayer, updatePlayersInfo } from "./../graphql/mutations";
 import { getPlayersInfo, getPlayerByRoomId } from "./../graphql/queries";
 import { onUpdatePlayerByRoomId } from "./../graphql/subscriptions";
 
@@ -204,6 +204,7 @@ export default {
       const newUserIdList = Array.from(userIdSet);
       const accumurateNum = [];
       const accumurateNumUserId = [];
+      const accumurateNumUser = [];
       newUserIdList.forEach(id => {
         const user = this.players.filter(player => {
           return player.userId === id;
@@ -212,6 +213,8 @@ export default {
         // [id] が誰に投票されたかを意味するので voteResults で該当者がでる
         accumurateNumUserId.push(voteResults[id]);
         console.log(voteResults[id]);
+        user[0].getVotes = accumurate[id];
+        accumurateNumUser.push(user[0]);
         displayResult +=
           user[0].userName + "さん : " + accumurate[id] + "票" + "\n";
       });
@@ -225,14 +228,46 @@ export default {
         console.log("再投票", maxCount);
         alert("再投票になります");
         this.$store.state.player.vote = "";
-        const result = await API.graphql(
+        await API.graphql(
           graphqlOperation(updatePlayer, { input: this.$store.state.player })
         );
-        console.log(result);
       } else {
+        console.log("acc", accumurateNumUser);
+        const deadPerson = accumurateNumUser.filter(player => {
+          console.log(player);
+          return player.getVotes === maxNum;
+        });
+        console.log("dead", deadPerson);
+        deadPerson[0].state = "dead";
+        // 死んだ人が自分で全体と自分のDBを書き換える
+        this.checkMyDead(deadPerson[0]);
         this.checkGameEnd();
         // nigth action のページへ
       }
+    },
+    checkMyDead: async function(deadPerson) {
+      if (deadPerson.userId === this.player.userId) {
+        this.playersInfo.deads.push(deadPerson.userId);
+        this.$store.state.playersInfo = this.playersInfo;
+        this.$store.state.player.state = deadPerson.state;
+        await API.graphql(
+          graphqlOperation(updatePlayer, { input: this.$store.state.player })
+        );
+        const result = await API.graphql(
+          graphqlOperation(updatePlayersInfo, {
+            input: this.$store.state.playersInfo
+          })
+        );
+        console.log(result);
+      }
+    },
+    goNight: async function() {
+      this.$store.state.player.vote = "";
+      this.$store.state.player.state = "night";
+      await API.graphql(
+        graphqlOperation(updatePlayer, { input: this.$store.state.player })
+      );
+      this.$router.push("/nightgames");
     },
     checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
