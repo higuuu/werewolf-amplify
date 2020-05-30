@@ -177,7 +177,7 @@ export default {
         }
       });
     },
-    judge: function(voteResults) {
+    judge: async function(voteResults) {
       console.log(this.playersInfo.alives.length);
       console.log(voteResults.length);
       const votes = [];
@@ -198,24 +198,44 @@ export default {
             ? 1
             : accumurate[voteResults[id]] + 1;
       });
-      console.log(accumurate);
+      console.log(userIdList);
       const userIdSet = new Set(userIdList);
       const newUserIdList = Array.from(userIdSet);
+      const accumurateNum = [];
+      const accumurateNumUserId = [];
       newUserIdList.forEach(id => {
         const user = this.players.filter(player => {
           return player.userId === id;
         });
-        console.log(user);
+        console.log(newUserIdList);
+        console.log(this.players);
+        console.log("user", user[0]);
+        accumurateNum.push(accumurate[id]);
+        // [id] が誰に投票されたかを意味するので voteResults で該当者がでる
+        accumurateNumUserId.push(voteResults[id]);
+        console.log(voteResults[id]);
         displayResult +=
-          user[0].userName +
-          "さん : " +
-          accumurate[voteResults[id]] +
-          "票" +
-          "\n";
+          user[0].userName + "さん : " + accumurate[id] + "票" + "\n";
       });
-      // nigth action のページ
+      console.log("accumu", accumurate);
       alert(`投票結果\n${displayResult}`);
       // 再投票の処理
+      const maxNum = Math.max.apply(null, accumurateNum);
+      const maxCount = accumurateNum.filter(num => {
+        return num == maxNum;
+      }).length;
+      if (maxCount > 1) {
+        console.log("再投票", maxCount);
+        alert("再投票になります");
+        this.$store.state.player.vote = "";
+        const result = await API.graphql(
+          graphqlOperation(updatePlayer, { input: this.$store.state.player })
+        );
+        console.log(result);
+      } else {
+        this.checkGameEnd();
+        // nigth action のページへ
+      }
     },
     checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
