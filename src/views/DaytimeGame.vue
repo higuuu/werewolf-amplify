@@ -201,23 +201,30 @@ export default {
       });
       console.log(userIdList);
       const userIdSet = new Set(userIdList);
-      const newUserIdList = Array.from(userIdSet);
+      const newUserNameList = Array.from(userIdSet);
       const accumurateNum = [];
       const accumurateNumUserId = [];
       const accumurateNumUser = [];
-      newUserIdList.forEach(id => {
+      console.log("accum", accumurate);
+      newUserNameList.forEach(name => {
         const user = this.players.filter(player => {
-          return player.userId === id;
+          console.log("player", player);
+          return player.userName === name;
         });
-        accumurateNum.push(accumurate[id]);
-        // [id] が誰に投票されたかを意味するので voteResults で該当者がでる
-        accumurateNumUserId.push(voteResults[id]);
-        console.log(voteResults[id]);
-        user[0].getVotes = accumurate[id];
-        accumurateNumUser.push(user[0]);
-        displayResult +=
-          user[0].userName + "さん : " + accumurate[id] + "票" + "\n";
+        console.log("user", user);
+        if (user.length !== 0) {
+          accumurateNum.push(accumurate[name]);
+          // [id] が誰に投票されたかを意味するので voteResults で該当者がでる
+          accumurateNumUserId.push(voteResults[name]);
+          console.log(voteResults[name]);
+          user[0].getVotes = accumurate[name];
+          accumurateNumUser.push(user[0]);
+          displayResult +=
+            user[0].userName + "さん : " + accumurate[name] + "票" + "\n";
+        }
       });
+      console.log("accumuNUM", accumurateNum);
+      console.log(accumurateNumUser);
       alert(`投票結果\n${displayResult}`);
       // 再投票の処理
       const maxNum = Math.max.apply(null, accumurateNum);
