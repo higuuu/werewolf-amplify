@@ -144,6 +144,7 @@ export default {
       // times%2=1 の場合パスを変える、あとからログイン用
       if (this.player.state === "night") {
         // nigth action のページ
+        console.log("night");
       }
     },
     checkVote: async function() {
@@ -250,6 +251,7 @@ export default {
         this.checkMyDead(deadPerson[0]);
         this.checkGameEnd();
         // nigth action のページへ
+        this.$router.push("/night");
       }
     },
     checkMyDead: async function(deadPerson) {

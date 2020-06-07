@@ -4,7 +4,14 @@
     <b-container fluid class="mb-2">
       <b-row>
         <b-col cols="10" offset="1">
-          <b-form-select v-model="vote" :options="nameList" />
+          <b-form-select v-model="target" :options="nameList" />
+          <b-button-group class="mt-2">
+            <b-button
+              v-if="player.positioin === 'diviner'"
+              variant="success"
+              @click="startDiviner()"
+            >占う</b-button>
+          </b-button-group>
         </b-col>
       </b-row>
     </b-container>
@@ -12,7 +19,7 @@
     <b-container fluid>
       <b-row>
         <b-col cols="10" offset="1">
-          <b-alert :show="isDoneVote" variant="success">あなたのアクション選択は完了しました</b-alert>
+          <b-alert :show="isDoneAction" variant="success">あなたのアクション選択は完了しました</b-alert>
           <b-alert :show="isExpiredTime" variant="danger">
             時間切れです。
             <br />全員のアクションを完了させて下さい。
@@ -53,11 +60,12 @@ export default {
       playersInfo: this.$store.state.playersInfo,
       // gameInfo: this.$store.state.gameInfo,
       nameList: "",
-      vote: "",
+      target: "",
       startTime: "",
       waitingTime: null,
-      isDoneVote: false,
-      isExpiredTime: false
+      isDoneAction: false,
+      isExpiredTime: false,
+      canAction: false
     };
   },
   computed: {},
@@ -75,7 +83,6 @@ export default {
     setInterval(() => {
       this.calWaitingTime();
     }, 1000);
-    this.checkVote();
   },
   methods: {
     calWaitingTime: function() {
@@ -126,9 +133,23 @@ export default {
       console.log(this.players);
       // players.times / 2 の数だけ占い師は表示できる
       if (this.player.positioin === "diviner") {
-        this.player.actions.forEach(playerId => {
+        if (this.player.actions.length < this.players.times) {
+          this.canAction = true;
+          // this.player.actions.forEach(playerId => {
+          //   console.log(playerId);
+          // });
+        }
+      }
+    },
+    startDiviner: function() {
+      if (this.canAction) {
+        this.playersInfo.alives.forEach(playerId => {
           console.log(playerId);
+          console.log();
+          console.log(this.player.actions);
         });
+      } else {
+        alert("今晩はアクション済みです");
       }
     },
     checkState: function() {

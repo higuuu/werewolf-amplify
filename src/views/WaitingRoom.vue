@@ -250,7 +250,7 @@ export default {
       };
       this.positions = shuffle(this.positions);
       console.log("shuffle", this.positions);
-      console.log(this.players);
+      console.log("players", this.players);
       const playersId = [];
       this.players.forEach((player, i) => {
         player.position = this.positions[i];
