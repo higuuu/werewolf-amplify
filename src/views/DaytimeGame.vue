@@ -106,18 +106,18 @@ export default {
       // players.displayPosition に全部に不明と記入する
       let index = 0;
       this.players.forEach(() => {
-        if (this.player.positioin === "werewolf") {
-          this.players[index].displayPosition = this.player.positioin;
+        if (this.player.position === "werewolf") {
+          this.players[index].displayPosition = this.player.position;
         } else {
           this.players[index].displayPosition = "不明";
         }
-        if (this.player.positioin === "diviner") {
+        if (this.player.position === "diviner") {
           this.player.actions.forEach(playerId => {
             console.log(playerId);
             if (playerId === this.players[index].userId) {
               this.players[index].displayPosition = this.players[
                 index
-              ].positioin;
+              ].position;
             }
           });
         }
@@ -134,7 +134,7 @@ export default {
       });
       console.log(this.players);
       // players.times / 2 の数だけ占い師は表示できる
-      if (this.player.positioin === "diviner") {
+      if (this.player.position === "diviner") {
         this.player.actions.forEach(playerId => {
           console.log(playerId);
         });
@@ -240,7 +240,6 @@ export default {
           graphqlOperation(updatePlayer, { input: this.$store.state.player })
         );
       } else {
-        console.log("acc", accumurateNumUser);
         const deadPerson = accumurateNumUser.filter(player => {
           console.log(player);
           return player.getVotes === maxNum;
@@ -250,8 +249,10 @@ export default {
         // 死んだ人が自分で全体と自分のDBを書き換える
         this.checkMyDead(deadPerson[0]);
         this.checkGameEnd();
+        // 死んだ人に全体に必要な書き込みをしてもらうことで
+        this.routinUpdateInfo();
         // nigth action のページへ
-        this.$router.push("/night");
+        this.goNight();
       }
     },
     checkMyDead: async function(deadPerson) {
@@ -276,11 +277,14 @@ export default {
       await API.graphql(
         graphqlOperation(updatePlayer, { input: this.$store.state.player })
       );
-      this.$router.push("/nightgames");
+      this.$router.push("/night");
     },
     checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
       // 結果表示 のページ
+    },
+    routinUpdateInfo: function() {
+      this.playersInfo.times += 1;
     }
   }
 };

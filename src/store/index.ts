@@ -23,8 +23,7 @@ export default new Vuex.Store({
       diviner: 0,
       brave: 0,
       people: 0,
-      players: [],
-      state: ""
+      players: []
     },
     player: {
       userId: "",
@@ -34,9 +33,10 @@ export default new Vuex.Store({
       actions: [""],
       vote: ""
     },
+    // ゲーム中変化するデータ
     playersInfo: {
       id: "", //room
-      times: 0,
+      times: 0,//昼、毎回更新
       alives: [],
       deads: [],
       startTime: null,
@@ -44,7 +44,8 @@ export default new Vuex.Store({
       playersVotes: [],
       werewolfVotes: [],
       defenceTargets: [],
-      players: []
+      players: [],
+      //iran-> state: ""//昼夜、毎回更新
     },
   },
   mutations: {

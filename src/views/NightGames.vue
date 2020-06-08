@@ -7,7 +7,7 @@
           <b-form-select v-model="target" :options="nameList" />
           <b-button-group class="mt-2">
             <b-button
-              v-if="player.positioin === 'diviner'"
+              v-if="player.position === 'diviner'"
               variant="success"
               @click="startDiviner()"
             >占う</b-button>
@@ -70,6 +70,7 @@ export default {
   },
   computed: {},
   created() {
+    console.log("night", this.player);
     console.log(this.playersInfo);
     this.nameList = this.players.map(player => {
       if (this.playersInfo.alives.includes(player.userId)) {
@@ -105,18 +106,18 @@ export default {
       // players.displayPosition に全部に不明と記入する
       let index = 0;
       this.players.forEach(() => {
-        if (this.player.positioin === "werewolf") {
-          this.players[index].displayPosition = this.player.positioin;
+        if (this.player.position === "werewolf") {
+          this.players[index].displayPosition = this.player.position;
         } else {
           this.players[index].displayPosition = "不明";
         }
-        if (this.player.positioin === "diviner") {
+        if (this.player.position === "diviner") {
           this.player.actions.forEach(playerId => {
             console.log(playerId);
             if (playerId === this.players[index].userId) {
               this.players[index].displayPosition = this.players[
                 index
-              ].positioin;
+              ].position;
             }
           });
         }
@@ -132,8 +133,11 @@ export default {
       });
       console.log(this.players);
       // players.times / 2 の数だけ占い師は表示できる
-      if (this.player.positioin === "diviner") {
-        if (this.player.actions.length < this.players.times) {
+      if (this.player.position === "diviner") {
+        console.log("times", this.playersInfo.times);
+        console.log("actions", this.player.actions);
+        // 最初はactions に test が入るから+1する必要がある
+        if (this.player.actions.length < this.playersInfo.times + 1) {
           this.canAction = true;
           // this.player.actions.forEach(playerId => {
           //   console.log(playerId);
@@ -143,10 +147,27 @@ export default {
     },
     startDiviner: function() {
       if (this.canAction) {
-        this.playersInfo.alives.forEach(playerId => {
+        const alivePlayers = [];
+        console.log(this.players);
+        this.players.forEach(player => {
+          alivePlayers[player.userId] = player;
+        });
+        this.playersInfo.alives.forEach((playerId, i) => {
+          console.log(i);
           console.log(playerId);
-          console.log();
-          console.log(this.player.actions);
+          console.log(this.target);
+          console.log(alivePlayers[playerId].userName);
+          if (this.target === alivePlayers[playerId].userName) {
+            console.log("ac", this.player.actions);
+            this.player.actions.push(playerId);
+            alert(
+              `${alivePlayers[playerId].userName}は${alivePlayers[playerId].position}`
+            );
+            API.graphql(graphqlOperation(updatePlayer, { input: this.player }));
+            this.checkDisplayPosition();
+            this.canAction = false;
+            return;
+          }
         });
       } else {
         alert("今晩はアクション済みです");
