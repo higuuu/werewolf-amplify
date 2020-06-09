@@ -65,7 +65,9 @@ export default {
       waitingTime: null,
       isDoneAction: false,
       isExpiredTime: false,
-      canAction: false
+      canDiviner: false,
+      canWerewolf: false,
+      canDefence: false
     };
   },
   computed: {},
@@ -138,15 +140,29 @@ export default {
         console.log("actions", this.player.actions);
         // 最初はactions に test が入るから+1する必要がある
         if (this.player.actions.length < this.playersInfo.times + 1) {
-          this.canAction = true;
+          this.canDiviner = true;
           // this.player.actions.forEach(playerId => {
           //   console.log(playerId);
           // });
         }
       }
+      // 人狼は投票できる
+      if (this.player.position === "werewolf") {
+        // 最初はactions に test が入るから+1する必要がある
+        if (this.player.actions.length < this.playersInfo.times + 1) {
+          this.canWerewolf = true;
+        }
+      }
+      // 勇者は守れる
+      if (this.player.position === "brave") {
+        // 最初はactions に test が入るから+1する必要がある
+        if (this.player.actions.length < this.playersInfo.times + 1) {
+          this.canDefence = true;
+        }
+      }
     },
     startDiviner: function() {
-      if (this.canAction) {
+      if (this.canDiviner) {
         const alivePlayers = [];
         console.log(this.players);
         this.players.forEach(player => {
@@ -165,7 +181,33 @@ export default {
             );
             API.graphql(graphqlOperation(updatePlayer, { input: this.player }));
             this.checkDisplayPosition();
-            this.canAction = false;
+            this.canDiviner = false;
+            return;
+          }
+        });
+      } else {
+        alert("今晩はアクション済みです");
+      }
+    },
+    startWerewolf: function() {
+      if (this.canDiviner) {
+        const alivePlayers = [];
+        console.log(this.players);
+        this.players.forEach(player => {
+          alivePlayers[player.userId] = player;
+        });
+        this.playersInfo.alives.forEach((playerId, i) => {
+          console.log(i);
+          console.log(playerId);
+          console.log(this.target);
+          console.log(alivePlayers[playerId].userName);
+          if (this.target === alivePlayers[playerId].userName) {
+            console.log("ac", this.player.actions);
+            this.player.actions.push(playerId);
+            // 投票数セレクトし集計
+            API.graphql(graphqlOperation(updatePlayer, { input: this.player }));
+            this.checkDisplayPosition();
+            this.canWerewolf = false;
             return;
           }
         });
