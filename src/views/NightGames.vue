@@ -275,6 +275,10 @@ export default {
     checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
       // 結果表示 のページ
+    },
+    chooseRandom: function(arrayData) {
+      const arrayIndex = Math.floor(Math.random() * arrayData.length);
+      return arrayData[arrayIndex];
     }
   }
 };
