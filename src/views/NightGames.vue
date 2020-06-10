@@ -216,7 +216,6 @@ export default {
         await API.graphql(
           graphqlOperation(updatePlayer, { input: this.player })
         );
-        const players = await API.graphql(
         const resPlayers = await API.graphql(
           graphqlOperation(getPlayerByRoomId, { roomId: this.playersInfo.id })
         );
