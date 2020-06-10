@@ -107,8 +107,8 @@ export default {
     checkDisplayPosition: function() {
       // players.displayPosition に全部に不明と記入する
       let index = 0;
-      this.players.forEach(() => {
-        if (this.player.position === "werewolf") {
+      this.players.forEach(p => {
+        if (this.player.position === "werewolf" && p.position === "werewolf") {
           this.players[index].displayPosition = this.player.position;
         } else {
           this.players[index].displayPosition = "不明";
