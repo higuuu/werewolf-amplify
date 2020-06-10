@@ -11,6 +11,11 @@
               variant="success"
               @click="startDiviner()"
             >占う</b-button>
+            <b-button
+              v-if="player.position === 'werewolf'"
+              variant="success"
+              @click="startWerewolf()"
+            >襲う</b-button>
           </b-button-group>
         </b-col>
       </b-row>
