@@ -209,15 +209,26 @@ export default {
           if (this.target === alivePlayers[playerId].userName) {
             console.log("ac", this.player.actions);
             this.player.actions.push(playerId);
-            // 投票数セレクトし集計
-            API.graphql(graphqlOperation(updatePlayer, { input: this.player }));
-            this.checkDisplayPosition();
             this.canWerewolf = false;
             return;
           }
         });
+        await API.graphql(
+          graphqlOperation(updatePlayer, { input: this.player })
+        );
+        const players = await API.graphql(
+          graphqlOperation(getPlayerByRoomId, { roomId: this.playersInfo.id })
+        );
+        const werewolfList = [];
+        players.data.getPlayerByRoomId.items.forEach(player => {
+          if (player.position == "werewolf") {
+            werewolfList.push(player);
+          }
+        });
+        console.log(werewolfList);
       } else {
         alert("今晩はアクション済みです");
+        return;
       }
     },
     checkState: function() {
