@@ -49,7 +49,7 @@
 <script>
 import { API, graphqlOperation } from "aws-amplify";
 import DaytimeGameList from "@/components/DaytimeGameList.vue";
-import { updatePlayer } from "./../graphql/mutations";
+import { updatePlayer, updatePlayersInfo } from "./../graphql/mutations";
 import { getPlayersInfo, getPlayerByRoomId } from "./../graphql/queries";
 import { onUpdatePlayerByRoomId } from "./../graphql/subscriptions";
 
