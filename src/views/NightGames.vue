@@ -217,12 +217,27 @@ export default {
           graphqlOperation(updatePlayer, { input: this.player })
         );
         const players = await API.graphql(
+        const resPlayers = await API.graphql(
           graphqlOperation(getPlayerByRoomId, { roomId: this.playersInfo.id })
         );
-        const werewolfList = [];
-        players.data.getPlayerByRoomId.items.forEach(player => {
-          if (player.position == "werewolf") {
-            werewolfList.push(player);
+        const players = resPlayers.data.getPlayerByRoomId.items;
+        const werewolfActionList = [];
+        const defenceList = [];
+        console.log(players);
+        players.forEach((player, i) => {
+          console.log(player.actions.length);
+          console.log(i);
+          if (player.position == "werewolf" && player.actions != null) {
+            if (player.actions.length > 1) {
+              player.actions.forEach(action => {
+                if (action != "test") {
+                  werewolfActionList.push(action);
+                }
+              });
+            }
+          } else if (player.position == "brave") {
+            if (player.actions[0] != "test") {
+              defenceList.push(player.actions[0]);
           }
         });
         console.log(werewolfList);
