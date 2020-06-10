@@ -194,14 +194,14 @@ export default {
         alert("今晩はアクション済みです");
       }
     },
-    startWerewolf: function() {
-      if (this.canDiviner) {
+    startWerewolf: async function() {
+      if (this.canWerewolf) {
         const alivePlayers = [];
         console.log(this.players);
         this.players.forEach(player => {
           alivePlayers[player.userId] = player;
         });
-        this.playersInfo.alives.forEach((playerId, i) => {
+        await this.playersInfo.alives.forEach((playerId, i) => {
           console.log(i);
           console.log(playerId);
           console.log(this.target);
