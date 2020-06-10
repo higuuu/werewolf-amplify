@@ -237,9 +237,30 @@ export default {
           } else if (player.position == "brave") {
             if (player.actions[0] != "test") {
               defenceList.push(player.actions[0]);
+            }
           }
         });
-        console.log(werewolfList);
+        console.log(werewolfActionList);
+        const killTarget = this.chooseRandom(werewolfActionList);
+        // if (defenceList == null) {
+        //   players.werewolfVotes = killTarget;
+        //   const result = await API.graphql(
+        //     graphqlOperation(updatePlayersInfo, {
+        //       input: players
+        //     })
+        //   );
+        //   return;
+        // }
+        if (defenceList.indexOf(killTarget) == -1) {
+          const killer = "killer";
+          this.playersInfo.werewolfVotes = [killTarget];
+          const result = await API.graphql(
+            graphqlOperation(updatePlayersInfo, {
+              input: this.playersInfo
+            })
+          );
+          //
+        }
       } else {
         alert("今晩はアクション済みです");
         return;
