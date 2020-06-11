@@ -270,11 +270,42 @@ export default {
         return;
       }
     },
+    startDefence: async function() {
+      if (this.canDefence) {
+        const alivePlayers = [];
+        console.log(this.players);
+        this.players.forEach(player => {
+          alivePlayers[player.userId] = player;
+        });
+        await this.playersInfo.alives.forEach((playerId, i) => {
+          console.log(this.target);
+          console.log(alivePlayers[playerId].userName);
+          if (this.target === alivePlayers[playerId].userName) {
+            console.log("ac", this.player.actions);
+            this.player.actions.push(playerId);
+            this.canDefence = false;
+            return;
+          }
+        });
+        await API.graphql(
+          graphqlOperation(updatePlayer, { input: this.player })
+        );
+        const resPlayersInfo = await API.graphql(
+          graphqlOperation(getPlayersInfo, { id: this.playersInfo.id })
+        );
+        const playersInfo = resPlayersInfo.data.getPlayersInfo;
+        playersInfo.defenceTargets.push(this.player.actions[0]);
+        await API.graphql(
+          graphqlOperation(updatePlayersInfo, { input: playersInfo })
+        );
+      }
+    },
     checkState: function() {
       // times%2=1 の場合パスを変える、あとからログイン用
       if (this.player.state === "night") {
         // nigth action のページ
       }
+      //画面遷移とdefencelist内にある場合deads werewolfvotes にある人をdeadsにしない。反対派deads にする
     },
     checkGameEnd: function() {
       // 人狼過半数 or 0 になったらゲームを終了させる
