@@ -257,7 +257,6 @@ export default {
         //   return;
         // }
         if (defenceList.indexOf(killTarget) == -1) {
-          const killer = "killer";
           this.playersInfo.werewolfVotes = [killTarget];
           const result = await API.graphql(
             graphqlOperation(updatePlayersInfo, {
